@@ -23,19 +23,83 @@
     </tbody></table>
     <div id="blog-display">
         <h1 id="blog_title">BankCardNumberRecognition</h1>
-        <h2 id="blog_sub_title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <!-- <h2 id="blog_sub_title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2> -->
         <div id="blog">
-            <img src="https://images.unsplash.com/photo-1553748024-d1b27fb3f960?w=1450">
+            <img src="https://images.unsplash.com/photo-1553748024-d1b27fb3f960?w=1450" width=100%>
+            <em>Image on Unsplash</em>
+            <p>最近在做一个银行卡卡号识别的工作，根据要求，卡号识别部分要使用深度学习来做。</p>
+            <p>初步的打算是这样的，整个工作分为以下几步：</p>
+            <ul>
+                <li>银行卡定位</li>
+                <li>卡号定位</li>
+                <li>卡号裁剪</li>
+                <li>卡号识别(深度学习)</li>
+            </ul>
+            <h2>卡号识别（深度学习）</h2>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut placerat pretium sem, ac maximus dui sodales a. Nunc aliquet hendrerit turpis ac egestas. Phasellus volutpat tristique maximus. <b>Pellentesque feugiat eget nisi et dignissim.</b> Nam nibh erat, sollicitudin non facilisis nec, scelerisque nec ipsum. Sed accumsan velit condimentum, pharetra felis vitae, commodo tellus. <u><i>Mauris consequat luctus orci.</i></u></p>
-            <p>
-                Vivamus pharetra lobortis dui non tincidunt. Mauris vitae nisi vestibulum, mollis magna a, maximus mi. Suspendisse dictum eget augue quis sodales. Quisque rutrum ligula nec dapibus tincidunt. <span>Proin hendrerit massa a tellus vestibulum, a hendrerit ipsum iaculis. Suspendisse potenti.</span> Praesent eget erat blandit, finibus sapien vitae, ullamcorper erat. Integer blandit, felis at ullamcorper maximus, odio lectus pretium mauris, vel consequat lectus quam eu risus. Pellentesque gravida nec diam eget vehicula.
+                一上手先做的是卡号识别这一部分，原因是我认为这是整个工作的核心（后来证明我错了....）。提供的训练数据集中的每一张图片是像下面这样一张120 x 46 像素包含四个数字（假设空格算数字10）的图片，总共有1000张左右。
+                因为数据量较少，所有首先做了数据增强，因为图片裁剪，反转这样的数据增强方法对于这样的数字图片是不合适的，所以只在HSV空间做调整，将每一张图片扩展了80张。
+                <div style= "text-align:center"><img src="./train1.png" width="120px" height="46px"><img src="./train2.png" width="120" height="46"></div>
+                
             </p>
-            <img src="https://images.unsplash.com/photo-1556814278-8906c7d3a05f?w=1050">
+
             <p>
-                Donec hendrerit turpis non libero eleifend dignissim. Mauris non tempor metus, et tristique massa. Integer consequat justo quam, vitae aliquam arcu vestibulum at. Donec porttitor quam in tempus convallis. Praesent feugiat eget eros vitae accumsan. Duis ultricies odio quis nisl volutpat, consectetur imperdiet sem laoreet. Quisque maximus semper ligula at tincidunt. Pellentesque accumsan varius vehicula.
+                在设计神经网络时，有下面两种选择：
             </p>
+
+            <ol>
+                <li><strong>将一整张训练图片喂给网络，一次预测四个数字。</strong></li>
+                <li><strong>将一张训练图片按数字分割后喂给网络，一次预测一个数字。</strong></li>
+            </ol>
+                
+            <p>
+                为了方便省事，考虑到效率问题
+                （因为在第二种方式下，图片分割后，网络需要运行四次才能预测一张图片，后来明白了，其实通过设置batchsize就能解决，不存在效率这个问题），选择了第一种方式。
+            </p>
+
+            <h3>神经网络结构</h3>
+            
+            <p>
+                训练图片本身尺寸并不大，使用PyTorch框架简单搭建了一个包含4层卷积层和3层全连接层的网络结构，label是一个44维的vector，每11位（0-9加上空格）相当于一个one-hot，分别对应一个数字，
+                因为一个44维的label总体并不是one-hot，所以不能使用交叉熵损失函数，使用的是MSE损失函数，epoch设置为200，但训练的结果并不理想，准确率很低。考虑到分类问题还是使用交叉熵损失函数更合适，后来改变了思路，将label每11位用一次
+                交叉熵损失函数，总损失为四个损失之和，改进后的训练结果相比之前提升了很多，按每个数字来算的话，准确率在97%左右，按label来算，即四个数字全部预测正确才算正确，只要预测错一个就算错误
+                的话，准确率在80%左右，后期可以通过改变网络结构，增加层数等方法进一步提高准确率。
+            </p>
+
+            <p>
+                <strong>注意：</strong>PyTorch中的交叉熵损失函数和TensorFlow中的交叉熵损失函数参数设置稍有不同。
+            </p>
+
+            <code>
+                criterion = torch.nn.CrossEntropyLoss()<br>
+                loss = criterion(output, target)<br>
+            </code>
+            <p>
+                上面代码中的target在PyTorch中就是output对应的实际类别（scale），而不像TensorFlow中那样是一个one-hot向量。
+                所以在决定使用交叉熵损失函数后，在制作dataset时就应该考虑这个问题。
+            </p>
+            <!-- <img src="https://images.unsplash.com/photo-1556814278-8906c7d3a05f?w=1050"> -->
+            <h2>银行卡定位、卡号定位、卡号裁剪</h2>
+            <p>
+                前面说过，我认为卡号识别是整个工作的核心，后来回头来做这一步时证明我错了，银行卡定位、卡号定位、卡号裁剪才是最重要的工作，这一步的好坏，直接影响
+                后面的结果。事实上，实际的应用场景是下面这样，银行卡是在某种背景下拍摄，可变因素很多，包括光照、角度、拍摄设备的成像质量等，我尝试过opencv惯用手段
+                以及二值化模板匹配等，均未实现满意的效果。银行卡种类繁多，卡片上的花纹会影响卡号的定位，甚至如果银行卡颜色跟背景色差别不大，比如第二张图，这样的话
+                连银行卡定位都很困难。   
+            </p>
+            <div style= "text-align:center"><img src="./test1.jpeg" width=40%><img src="./test2.jpeg" width=40%></div>
+            <p>
+                其次，后来发现银行卡卡号有的16位，有的19位，如何进行有效分割，使每张图片包括四个数字（空格算一个数字）是一个需要仔细考虑的问题。进一步而言，
+                选择第一种网络设计形式到底合不合适也值得思考，因为刚开始对效率的担心是多余的。
+            </p>
+            <p>
+                这一步是接下来的重点.....
+            </p>
+            <p>
+                Back Soon...
+            </p>
+
         </div>
+
     </div>
     <div id="footer_blog">
         <a href="https://github.com/imfunniee" target="_blank">made on earth by a human</a>
