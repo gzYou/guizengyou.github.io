@@ -2,7 +2,7 @@
  {
   "url_title": "BankCardNumberRecognition",
   "title": "BankCardNumberRecognition",
-  "sub_title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "sub_title": "A method of bank card number recognition based on deep learning.",
   "top_image": "https://images.unsplash.com/photo-1553748024-d1b27fb3f960?w=1450",
   "visible": false
  }
