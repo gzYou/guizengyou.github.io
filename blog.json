@@ -12,5 +12,12 @@
   "sub_title": "深度学习任务中的目标函数.",
   "top_image": "https://images.unsplash.com/photo-1532618500676-2e0cbf7ba8b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2807&q=80",
   "visible": true
+ },
+ {
+  "url_title": "Scikit-Learn",
+  "title": "Scikit-Learn",
+  "sub_title": "Scikit-Learn简介.",
+  "top_image": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+  "visible": true
  }
 ]
