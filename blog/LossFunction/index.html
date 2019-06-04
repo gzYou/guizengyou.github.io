@@ -1,16 +1,8 @@
-<!DOCTYPE html><html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>LossFunction</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<!-- <link rel="stylesheet" href="../../index.css"> -->
-
-<!-- outer style -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+<title>目标函数</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
     /*!
@@ -29,9 +21,9 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-/* body {
+body {
   margin: 0;
-} */
+}
 article,
 aside,
 details,
@@ -1090,13 +1082,13 @@ html {
   font-size: 10px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-/* body {
+body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 1.42857143;
   color: #000;
   background-color: #fff;
-} */
+}
 input,
 button,
 select,
@@ -11726,7 +11718,10 @@ ul.typeahead-list > li > a {
 
 <style type="text/css">
 /* Overrides of notebook CSS for static HTML export */
-
+body {
+  overflow: visible;
+  padding: 8px;
+}
 
 div#notebook {
   overflow: visible;
@@ -11746,433 +11741,7 @@ div#notebook {
   }
 }
 </style>
-<style type="text/css">
-  body{
-      margin:0%;
-      padding:0%;
-      width:100vw;
-      background:var(--bg-color);
-      color:var(--text-color);
-      max-width:100vw;
-      overflow-x:hidden;
-      align-items:center;
-      font-family:"Microsoft YaHei",'Poppins', sans-serif;
-  }
-  
-  #loading {
-      width: 100vw;
-      height: 100vh;
-      position: fixed;
-      background: var(--bg-color);
-      z-index: 999;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      top:0;
-      bottom:0;
-      left:0;
-      right:0;
-  }
-  
-  #spinner {
-      animation: rotate 0.5s infinite linear;
-      width:50px;
-      height:50px;
-      border:2px solid var(--bg-color);
-      border-bottom:2px solid var(--text-color);
-      border-radius:50%;
-      margin:0;
-  }
-  
-  @keyframes rotate {
-      0% {transform: rotate(0deg);}
-      100% {transform: rotate(360deg);}
-  }
-  
-  #profile {
-      width:24vw;
-      padding:4vh 3vw;
-      height:92vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      text-align:left;
-      background:var(--background-image) center center;
-      background-size: cover !important;
-      background-repeat:no-repeat;
-      position:fixed;
-      color:#fff !important;
-  }
-  
-  #display {
-      width:64vw;
-      padding:4vh 3vw;
-      height:92vh;
-      display:inline-block;
-      padding-left:33vw;
-  }
-  
-  #display h1 {
-      font-size:50px;
-      color:var(--text-color);
-      font-weight:bold;
-      font-family: 'Questrial', sans-serif;
-  }
-  
-  .emoji {
-      width:18px;
-      height:18px;
-  }
-  
-  #profile_img_blog {
-      border-radius:50%;
-      width:90px;
-      height:90px;
-      background-size:cover !important;
-      background-repeat: no-repeat;
-  }
-  
-  #username_blog {
-      font-size:18px;
-      color:var(--text-color);
-      font-family: 'Poppins', sans-serif;
-      font-weight:bold;
-  }
-  
-  #username_blog span {
-      font-size:24px;
-      font-family: 'Questrial', sans-serif !important;
-  }
-  
-  #username_blog b {
-      font-size:12px;
-      font-family:'Poppins', sans-serif;
-      font-weight:bold;
-  }
-  
-  /* #blog-display {
-      width:60vw;
-      margin:0px 20vw;
-      text-align:left;
-      margin-top:3vh;
-      z-index:1;
-  } */
-  #profile_blog {
-      width:60vw;
-      margin:0px 20vw;
-      margin-top:10vh;
-      text-align:left;
-      z-index:1;
-  }
-  
-  #background {
-      width:100vw;
-      height:55vh;
-      background:var(--background-background);
-      background-size:cover !important;
-      background-repeat:no-repeat;
-      position: absolute;
-      z-index:-1;
-      margin-top:-10vh;
-  }
-  #blog-display h1 {
-      font-size:50px;
-      color:var(--text-color);
-      font-weight:bold;
-      font-family: 'Questrial', sans-serif;
-  }
-  
-  #blog-display h2 {
-      color:var(--blog-gray-color);
-  }
-  
-  #blog-display {
-      padding:1vh 0px;
-      font-family: 'Questrial', sans-serif;
-  }
-  #blog p {
-      font-size:17px;
-      line-height:25px;
-      word-spacing:1.2px;
-      margin:5vh 0px;
-  }
-  /* #blog p span {
-      padding:2px 4px;
-      background:var(--text-color);
-      color:var(--bg-color) !important;
-  } */
-  
-  #blog img {
-      /* width:100%; */
-      margin:2vh 0px;
-      border-radius:5px;
-      border:1px solid rgb(0, 0, 0, 0.08);
-  }
-  
-  #header {
-      width:63vw;
-      text-align:right;
-      padding:3vh 0px;
-      position:absolute;
-  }
-  
-  #header a {
-      color:var(--text-color);
-      text-decoration:none;
-      margin-left:4vw;
-      font-weight:bold;
-  }
-  #footer_blog {
-      width:90vw;
-      padding:8vh 5vw;
-      text-align:center;
-  }
-  
-  #footer_blog a {
-      color:var(--text-color) !important;
-      text-decoration:none;
-      font-family: 'Questrial', sans-serif;
-      font-weight:bold;
-  }
-  
-  #footer {
-      width:100%;
-      padding:8vh 0px;
-      text-align:center;
-  }
-  
-  #footer a {
-      color:var(--text-color) !important;
-      text-decoration:none;
-      font-family: 'Questrial', sans-serif;
-      font-weight:bold;
-  }
-  
-  #profile_img {
-      width:180px;
-      height:180px;
-      border-radius:5px;
-      background-size:cover !important;
-  }
-  
-  #profile div {
-      font-weight:bold;
-      margin:1.5vh 0px;
-  }
-  
-  #username {
-      font-size:18px;
-      font-weight:bold;
-  }
-  
-  #username span {
-      font-size:24px;
-  }
-  
-  #userbio {
-      font-size:26px;
-      font-family: 'Questrial', sans-serif;
-      width:100%;
-  }
-  
-  #about {
-      font-size:18px;
-      font-family: 'Questrial', sans-serif;
-  }
-  
-  #about span {
-      margin:1vh 0px;
-      display:block;
-  }
-  
-  #about span i {
-      font-size:16px;
-  }
-  
-  #work {
-      margin:2vh 0px;
-      padding:4vh 0px !important;
-  }
-  
-  #forks {
-      margin:2vh 0px;
-      padding:4vh 0px !important;
-  }
-  
-  .projects {
-      columns:2;
-  }
-  
-  .projects section {
-      width:85%;
-      padding:2.5vh 5%;
-      display:inline-block;
-      border-radius:5px;
-      color:var(--text-color);
-      border:1px solid rgb(0, 0, 0, 0.08);
-      box-shadow:0px 0px 0px rgb(0, 0, 0, 0);
-      transition:0.4s ease-in-out;
-      margin:2vh 0px;
-      transform:scale(1);
-  }
-  
-  .projects section:hover {
-      cursor: pointer;
-      border:1px solid rgb(0, 0, 0, 0);
-      box-shadow:0px 15px 35px rgb(0, 0, 0, 0.06);
-      transform:scale(1.03);
-  }
-  
-  .section_title {
-      font-size:24px;
-      font-weight:bold;
-      margin:1vh 0px;
-      padding:0px 1px;
-      word-wrap: break-word;
-  }
-  
-  .about_section {
-      font-size:18px;
-      font-family: 'Questrial', sans-serif;
-      margin:2vh 0px;
-      font-weight:bold;
-      word-wrap: break-word;
-  }
-  
-  .bottom_section {
-      margin:1vh 0px;
-      font-size:14px;
-      word-wrap: break-word;
-  }
-  
-  .bottom_section span {
-      margin-right:20px;
-      font-weight:bold;
-  }
-  
-  .bottom_section span i {
-      font-size:15px;
-  }
-  
-  #blog_section {
-      margin:2vh 0px;
-      padding:2vh 0px !important;
-  }
-  
-  #blogs {
-      columns:2;
-  }
-  
-  #blogs section {
-      width:85%;
-      display:inline-block;
-      border-radius:5px;
-      color:var(--text-color);
-      border:1px solid rgb(0, 0, 0, 0.04);
-      box-shadow:0px 0px 0px rgb(0, 0, 0, 0);
-      transition:0.4s ease-in-out;
-      transform:scale(1);
-      padding:0px;
-      margin:2vh 0px;
-  }
-  
-  #blogs section img {
-      width:100%;
-      border-radius:5px 5px 0px 0px;
-  }
-  
-  .blog_container {
-      padding:2.5vh 5%;
-  }
-  
-  #blogs section:hover {
-      cursor: pointer;
-      border:1px solid rgb(0, 0, 0, 0);
-      box-shadow:0px 15px 35px rgb(0, 0, 0, 0.06);
-      transform:scale(1.03);
-  }
-  
-  .go_back {
-      position: absolute;
-      color:var(--text-color);
-      font-size:26px;
-      margin-left:5vw;
-      margin-top:4vh;
-  }
-  
-  ::selection {
-      color:var(--bg-color); 
-      background:var(--text-color);
-  }
-  
-  @media (max-width: 800px){
-      #profile {
-          width:90vw;
-          padding:4vh 5vw;
-          height:60vh;
-          text-align:center;
-          position: relative;
-      }
-      #display {
-          width:90vw;
-          padding:4vh 5vw;
-          height:auto;
-          display:inline-block;
-          padding-left:5vw;
-      }
-      #profile_img {
-          width:120px;
-          height:120px;
-          margin:0px auto !important;
-      }
-      #work {
-          margin:0px;
-      }
-      .projects {
-          columns:1;
-      }
-      .projects section {
-          width:88%;
-      }
-      #blogs {
-          columns:1;
-      }
-      #blogs section {
-          width:98%;
-      }
-      #blog_section {
-          margin:0px;
-      }
-      #blog-display {
-          width:90vw;
-          margin:0px 5vw;
-          text-align:left;
-          margin-top:0vh;
-          z-index:1;
-      }
-      #profile_blog {
-          width:90vw;
-          margin:0px 5vw;
-          margin-top:10vh;
-          text-align:left;
-          z-index:1;
-      }
-      .go_back {
-          position: relative;
-          color:var(--text-color);
-          font-size:26px;
-          margin-left:5vw;
-          top:5vh;
-      }
-      #blog img {
-          margin:1vh 0px !important;
-      }
-      #blog p {
-          margin:2vh 0px;
-      }
-    }
-  </style>
+
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <link rel="stylesheet" href="custom.css">
 
@@ -12197,550 +11766,520 @@ div#notebook {
         }
     });
     </script>
-    <!-- End of mathjax configuration -->
-
-
-
-</head>
+    <!-- End of mathjax configuration --></head>
 <body>
-    <div id="loading">
-        <div id="spinner"></div>
-    </div>
-    <a href="/" class="go_back"><i class="fas fa-arrow-left"></i></a>
-    <div id="background"></div>
-    <table id="profile_blog">
-        <tbody><tr>
-            <td style="width:8vw;"><div id="profile_img_blog"></div></td>
-            <td style="width:52vw;">
-                <div id="username_blog"></div>
-            </td>
-        </tr>
-    </tbody></table>
-    <div id="blog-display">
-        <div style= "text-align:center">
-        <h1 id="blog_title">目标函数</h1>
-        <h2 id="blog_sub_title">深度学习任务中的目标函数.</h2>
-        <h3><a href="http://lamda.nju.edu.cn/weixs/book/CNN_book.html" target="_blank">Reference</a></h3>
-        <div>
-        <div id="blog">
-            <!-- <div style= "position: relative;overflow:hidden;width:60%"> -->
-            <img src="https://images.unsplash.com/photo-1532618500676-2e0cbf7ba8b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2807&q=80" width=77%>
-            <!-- </div> -->
-            <div style= "text-align:center">
-            <em>Image on Unsplash</em> 
-            </div>
-            <div tabindex="-1" id="notebook" class="border-box-sizing">
-                <div class="container" id="notebook-container">
-            
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h2 id="&#30446;&#26631;&#20989;&#25968;">&#30446;&#26631;&#20989;&#25968;<a class="anchor-link" href="#&#30446;&#26631;&#20989;&#25968;">&#182;</a></h2>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>机器学习中的所有算法都依赖于最小化或最大化某一个函数，我们称之为“目标函数”。最小化的这组函数被称为“损失函数”。损失函数是衡量预测模型预测期望结果表现的指标。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>为防止模型过拟合或达到其他训练目标（如希望得到稀疏解），正则项通常作为对参数的约束也会加入目标函数中一起指导模型训练。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h3 id="&#20998;&#31867;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;">&#20998;&#31867;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;<a class="anchor-link" href="#&#20998;&#31867;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;">&#182;</a></h3>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h4 id="&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(SoftmaxCrossEntropy)">&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(SoftmaxCrossEntropy)<a class="anchor-link" href="#&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(SoftmaxCrossEntropy)">&#182;</a></h4>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>交叉熵（cross entropy）损失函数又称Softmax损失函数，是目前CNN中最常用的分类目标函数，其形式为：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \mathcal{L}_{\text { cross entropy loss }}=\mathcal{L}_{\text { softmax loss }}=-\frac{1}{N} \sum_{i=1}^{N} \log \left(\frac{e^{h_{y_{i}}}}{\sum_{j=1}^{C} e^{h_{j}}}\right)
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>通过指数化变换使网络输出$h$转换为概率形式。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h4 id="&#21512;&#39029;&#25439;&#22833;&#20989;&#25968;(Hinge-Loss)">&#21512;&#39029;&#25439;&#22833;&#20989;&#25968;(Hinge Loss)<a class="anchor-link" href="#&#21512;&#39029;&#25439;&#22833;&#20989;&#25968;(Hinge-Loss)">&#182;</a></h4>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>在SVM中被广泛使用的合页损失函数(hinge loss)有时也会作为目标函数在神经网络模型中使用：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \mathcal{L}_{\text { hinge loss }}=\frac{1}{N} \sum_{i=1}^{N} \max \left\{0,1-h_{y_{i}}\right\}
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>一般的分类任务使用交叉熵损失函数。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h4 id="&#22369;&#36947;&#25439;&#22833;&#20989;&#25968;(Ramp-Loss)">&#22369;&#36947;&#25439;&#22833;&#20989;&#25968;(Ramp Loss)<a class="anchor-link" href="#&#22369;&#36947;&#25439;&#22833;&#20989;&#25968;(Ramp-Loss)">&#182;</a></h4>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>从Hinge Loss的公式可以看出，<strong>Hinge Loss对错分类的样本惩罚越大</strong>，这就使得这个损失函数对噪声的抵抗能力差，因为如果某个样本本身label就是错的或者样本是离群点，由于错分导致样本分类误差变大，因此会影响整个分类超平面的学习，从而降低模型的泛化能力。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p><strong>非凸损失函数</strong>的引入解决了上述问题。分类任务和回归任务中非凸损失函数的代表分别是坡道损失函数(Ramp Loss Function)和Tukey's biweight损失函数，它们的共同特点是在分类(回归)误差较大区域进行“截断”，使得较大的误差不再大程度的影响整个误差函数，因此对噪声数据和离群点具有良好的抗噪特性。因为这类函数是非凸的，在传统机器学习中非凸函数的优化过于复杂，但在神经网络中相对容易，整个网络模型本身就是个巨大的非凸函数。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>坡道损失函数的定义为：
-            $$ 
-            \begin{aligned} \mathcal{L}_{\text { ramp loss }} &amp;=\mathcal{L}_{\text { hinge loss }}-\frac{1}{N} \sum_{i=1}^{N} \max \left\{0, s-h_{y_{i}}\right\} \\ &amp;=\frac{1}{N} \sum_{i=1}^{N}\left(\max \left\{0,1-h_{y_{i}}\right\}-\max \left\{0, s-h_{y_{i}}\right\}\right) \end{aligned}
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$s$指定了“截断点”的位置。对比合页损失函数可以发现，坡道损失函数就是在$s$处“截断”的合页损失函数，因此坡道损失函数也被称为“截断合页损失函数”。$s$一般设置为$s=-\frac{1}{C-1}$，$C$是分类任务的类别数。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <hr>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>上述损失函数只是简单计算了预测值与真实值之间的误差，没有考虑特征判别性学习，后来提出的<strong>大间隔交叉熵损失函数(large-margin softmax loss)、中心损失函数(center loss)</strong>等进一步提高学习到的特征表示的判别性，在增大类间距离的同时，也减小了类内距离。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h4 id="&#22823;&#38388;&#38548;&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(large-margin-softmax-loss)">&#22823;&#38388;&#38548;&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(large-margin softmax loss)<a class="anchor-link" href="#&#22823;&#38388;&#38548;&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(large-margin-softmax-loss)">&#182;</a></h4>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>传统的交叉熵损失函数还可以具体表示为：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \mathcal{L}_{\text { softmax loss }}=-\frac{1}{N} \sum_{i=1}^{N} \log \left(\frac{e^{\left\|\mathbf{W}_{y_{i}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{y_{i}}\right)}}{\sum_{j=1}^{C} e^{\left\|\mathbf{W}_{j}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{j}\right)}}\right)
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>这时，为保证分类正确需要迫使学习的参数满足：$\mathbf{W}_{1}^{\top} \boldsymbol{x}_{i}&gt;\mathbf{W}_{2}^{\top} \boldsymbol{x}_{i}$，也就是$\left\|\mathbf{W}_{\mathbf{1}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{1}\right)&gt;\left\|\mathbf{W}_{\mathbf{2}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{2}\right)$，大间隔交叉熵损失函数在此基础上引入间隔控制因子$m$，使得$\left\|\mathbf{W}_{\mathbf{1}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(m \theta_{1}\right)&gt;\left\|\mathbf{W}_{2}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{2}\right)\left(0 \leq \theta_{1} \leq \frac{\pi}{m}\right)$，$m$越大，类间间隔越大。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>大间隔交叉熵损失函数的定义为：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \mathcal{L}_{\text { large- margin softmax loss }}=-\frac{1}{N} \sum_{i=1}^{N} \log \left(\frac{e^{\left\|\mathbf{W}_{1}\right\|\left\|\boldsymbol{x}_{i}\right\| \phi\left(\theta_{y_{i}}\right)}}{e^{\left\|\mathbf{W}_{i}\right\|\left\|\boldsymbol{x}_{i}\right\| \phi\left(\theta_{y_{i}}\right)}+\sum_{j \neq y_{i}} e^{\left\|\mathbf{W}_{\mathbf{j}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{j}\right)}}\right)
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>从公式上可以发现，它将第$i$类分类间隔拉大了。关于$\phi\left(\theta_{y_{i}}\right)$：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \phi(\theta)=\left\{\begin{array}{cc}{\cos (m \theta),} &amp; {0 \leq \theta \leq \frac{\pi}{m}} \\ {\mathcal{D}(\theta),} &amp; {\frac{\pi}{m}&lt;\theta \leq \pi}\end{array}\right.
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$\mathcal{D}(\theta)$只需要满足“单调递减”，一种具体的$\phi(\theta)$函数形式如下：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \phi(\theta)=(-1)^{k} \cos (m \theta)-2 k, \quad \theta \in\left[\frac{k \pi}{m}, \frac{(k+1) \pi}{m}\right]
-             $$ $k \in[0, m-1]$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>大间隔交叉熵损失函数<strong>扩大了类间距离</strong>，它的训练相比传统交叉熵损失函数更困难，这样可以起到防止模型过拟合，在分类性能上，<strong>大间隔交叉熵损失函数优于交叉熵损失函数和合页损失函数</strong>。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h4 id="&#20013;&#24515;&#25439;&#22833;&#20989;&#25968;">&#20013;&#24515;&#25439;&#22833;&#20989;&#25968;<a class="anchor-link" href="#&#20013;&#24515;&#25439;&#22833;&#20989;&#25968;">&#182;</a></h4>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>相比大间隔交叉熵损失函数，<strong>中心损失函数在考虑扩大类间距离的同时还考虑缩小类内差异</strong>。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>中心损失函数的定义为：
-            $$ 
-            \mathcal{L}_{\text { center loss }}=\frac{1}{2} \sum_{i=1}^{N}\left\|\boldsymbol{x}_{i}-\boldsymbol{c}_{y_{i}}\right\|_{2}^{2}
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>其中$\boldsymbol{c}_{y_{i}}$为第$y_{i}$类所有深度特征的均值（“中心”），它迫使所有隶属于$y_{i}$类的样本与中心不要距离过远，否则加大惩罚。实际使用，还配合考虑类间距离的损失函数使用，这样网络的最终目标函数形式可以表示为：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \begin{aligned} \mathcal{L}_{\text { final }} &amp;=\mathcal{L}_{\text { cross entropy loss }}+\lambda \mathcal{L}_{\text { center }} \operatorname{loss}\left(\boldsymbol{h}, y_{i}\right) \\ &amp;=-\frac{1}{N} \sum_{i=1}^{N} \log \left(\frac{e^{h_{y_{i}}}}{\sum_{j=1}^{C} e^{h_{j}}}\right)+\frac{\lambda}{2} \sum_{i=1}^{N}\left\|\boldsymbol{x}_{i}-\boldsymbol{c}_{y_{i}}\right\|_{2}^{2} \end{aligned}
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$\lambda$为两个损失函数间的调节项。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h3 id="&#22238;&#24402;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;">&#22238;&#24402;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;<a class="anchor-link" href="#&#22238;&#24402;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;">&#182;</a></h3>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>残差或预测误差用于衡量模型预测值与真实标记的靠近程度</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$l_{t}^{i}$表示样本$i$上网络回归预测值$\left(\hat{\boldsymbol{y}}^{i}\right)$与其真实标记在第$t$维的预测误差（残差）：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$l_{t}^{i}=y_{t}^{i}-\hat{y}_{t}^{i}$$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h4 id="$\ell_{1}$&#25439;&#22833;&#20989;&#25968;">$\ell_{1}$&#25439;&#22833;&#20989;&#25968;<a class="anchor-link" href="#$\ell_{1}$&#25439;&#22833;&#20989;&#25968;">&#182;</a></h4>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \mathcal{L}_{\ell_{1} \operatorname{loss}}=\frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{M}\left|l_{t}^{i}\right|
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h4 id="$\ell_{2}$&#25439;&#22833;&#20989;&#25968;">$\ell_{2}$&#25439;&#22833;&#20989;&#25968;<a class="anchor-link" href="#$\ell_{2}$&#25439;&#22833;&#20989;&#25968;">&#182;</a></h4>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \mathcal{L}_{\ell_{2} \text { loss }}=\frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{M}\left(l_{t}^{i}\right)^{2}
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>实际使用中，$\ell_{1}$与$\ell_{2}$损失函数在回归精度上几乎相差无几，不过在一些情况下$\ell_{2}$损失函数会优于$\ell_{1}$损失函数，同时收敛速度$\ell_{2}$损失函数也比$\ell_{1}$略快。</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <h4 id="Turkey's-biweight&#25439;&#22833;&#20989;&#25968;"><strong>Turkey's biweight</strong>&#25439;&#22833;&#20989;&#25968;<a class="anchor-link" href="#Turkey's-biweight&#25439;&#22833;&#20989;&#25968;">&#182;</a></h4>
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p><strong>Turkey's biweight</strong>损失函数也是一类非凸损失函数，同Ramp Loss Function一样，可克服在回归任务中的离群点或样本噪声对模型的影响。其定义如下：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>$$ 
-            \mathcal{L}_{\text { Tukey's biweight loss }}=\left\{\begin{array}{l}{\frac{c^{2}}{6 N} \sum_{i=1}^{N} \sum_{t=1}^{M}\left[1-\left(1-\left(\frac{l_{t}^{i}}{c}\right)^{2}\right)^{3}\right]} &amp; {\text { if }\left|i_{t}^{i}\right| \leq c} \\ {\frac{c^{2} M}{6}} &amp; {\text { otherwise }}\end{array}\right.
-             $$</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>三种损失函数示意图如下：</p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p><img src="./lossfunction.jpg" alt="lossfunction.jpg"></p>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <hr>
-            
-            </div>
-            </div>
-            </div>
-            <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-            </div>
-            <div class="inner_cell">
-            <div class="text_cell_render border-box-sizing rendered_html">
-            <p>不同目标函数各有特点，使用时可根据任务需要挑选合适的目标函数。</p>
-            
-            </div>
-            </div>
-            </div>
-                </div>
-              </div>
-        </div>
-    </div>
-    <div id="footer_blog" style= "text-align:center">
-        <a href="https://github.com/imfunniee" target="_blank">made on earth by a human</a>
-    </div>
-    <script type="text/javascript">
-    setTimeout(function(){
-        document.getElementById("loading").classList.add("animated");
-        document.getElementById("loading").classList.add("fadeOut");
-        setTimeout(function(){
-        document.getElementById("loading").classList.remove("animated");
-        document.getElementById("loading").classList.remove("fadeOut");
-        document.getElementById("loading").style.display = "none";
-        },800);
-    },1500);
-    $.getJSON("../../config.json", function(user){
-        var icon = document.createElement("link");
-        icon.setAttribute("rel", "icon");
-        icon.setAttribute("href", user[0].userimg);
-        icon.setAttribute("type", "image/png");
-        document.getElementsByTagName("head")[0].appendChild(icon);
-        document.getElementById("profile_img_blog").style.background = `url('${user[0].userimg}') center center`;
-        document.getElementById("username_blog").innerHTML = `<spanstyle="display:${user[0].name == null || !user[0].name ? 'none' : 'block'};">${user[0].name}</span><br>@${user[0].username}<b id="blog_time"></b>`;
-    });
-    </script>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
 
-</body></html>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<center><font size="4" face="微软雅黑">目标函数</font></center>
+<center><a href="http://lamda.nju.edu.cn/weixs/book/CNN_book.html" target="_blank">Reference</a></center>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div align=center>
+    <img width = 100% height = 100% src ="https://images.unsplash.com/photo-1532618500676-2e0cbf7ba8b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2807&q=80"/>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div style="text-align:center">
+    <em>Photo on Unsplash</em>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>机器学习中的所有算法都依赖于最小化或最大化某一个函数，我们称之为“目标函数”。最小化的这组函数被称为“损失函数”。损失函数是衡量预测模型预测期望结果表现的指标。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>为防止模型过拟合或达到其他训练目标（如希望得到稀疏解），正则项通常作为对参数的约束也会加入目标函数中一起指导模型训练。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="&#20998;&#31867;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;">&#20998;&#31867;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;<a class="anchor-link" href="#&#20998;&#31867;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(SoftmaxCrossEntropy)">&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(SoftmaxCrossEntropy)<a class="anchor-link" href="#&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(SoftmaxCrossEntropy)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>交叉熵（cross entropy）损失函数又称Softmax损失函数，是目前CNN中最常用的分类目标函数，其形式为：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\mathcal{L}_{\text { cross entropy loss }}=\mathcal{L}_{\text { softmax loss }}=-\frac{1}{N} \sum_{i=1}^{N} \log \left(\frac{e^{h_{y_{i}}}}{\sum_{j=1}^{C} e^{h_{j}}}\right)
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>通过指数化变换使网络输出$h$转换为概率形式。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#21512;&#39029;&#25439;&#22833;&#20989;&#25968;(Hinge-Loss)">&#21512;&#39029;&#25439;&#22833;&#20989;&#25968;(Hinge Loss)<a class="anchor-link" href="#&#21512;&#39029;&#25439;&#22833;&#20989;&#25968;(Hinge-Loss)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>在SVM中被广泛使用的合页损失函数(hinge loss)有时也会作为目标函数在神经网络模型中使用：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\mathcal{L}_{\text { hinge loss }}=\frac{1}{N} \sum_{i=1}^{N} \max \left\{0,1-h_{y_{i}}\right\}
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>一般的分类任务使用交叉熵损失函数。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#22369;&#36947;&#25439;&#22833;&#20989;&#25968;(Ramp-Loss)">&#22369;&#36947;&#25439;&#22833;&#20989;&#25968;(Ramp Loss)<a class="anchor-link" href="#&#22369;&#36947;&#25439;&#22833;&#20989;&#25968;(Ramp-Loss)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>从Hinge Loss的公式可以看出，<strong>Hinge Loss对错分类的样本惩罚越大</strong>，这就使得这个损失函数对噪声的抵抗能力差，因为如果某个样本本身label就是错的或者样本是离群点，由于错分导致样本分类误差变大，因此会影响整个分类超平面的学习，从而降低模型的泛化能力。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>非凸损失函数</strong>的引入解决了上述问题。分类任务和回归任务中非凸损失函数的代表分别是坡道损失函数(Ramp Loss Function)和Tukey's biweight损失函数，它们的共同特点是在分类(回归)误差较大区域进行“截断”，使得较大的误差不再大程度的影响整个误差函数，因此对噪声数据和离群点具有良好的抗噪特性。因为这类函数是非凸的，在传统机器学习中非凸函数的优化过于复杂，但在神经网络中相对容易，整个网络模型本身就是个巨大的非凸函数。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>坡道损失函数的定义为：
+$$ 
+\begin{aligned} \mathcal{L}_{\text { ramp loss }} &amp;=\mathcal{L}_{\text { hinge loss }}-\frac{1}{N} \sum_{i=1}^{N} \max \left\{0, s-h_{y_{i}}\right\} \\ &amp;=\frac{1}{N} \sum_{i=1}^{N}\left(\max \left\{0,1-h_{y_{i}}\right\}-\max \left\{0, s-h_{y_{i}}\right\}\right) \end{aligned}
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$s$指定了“截断点”的位置。对比合页损失函数可以发现，坡道损失函数就是在$s$处“截断”的合页损失函数，因此坡道损失函数也被称为“截断合页损失函数”。$s$一般设置为$s=-\frac{1}{C-1}$，$C$是分类任务的类别数。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>上述损失函数只是简单计算了预测值与真实值之间的误差，没有考虑特征判别性学习，后来提出的<strong>大间隔交叉熵损失函数(large-margin softmax loss)、中心损失函数(center loss)</strong>等进一步提高学习到的特征表示的判别性，在增大类间距离的同时，也减小了类内距离。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#22823;&#38388;&#38548;&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(large-margin-softmax-loss)">&#22823;&#38388;&#38548;&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(large-margin softmax loss)<a class="anchor-link" href="#&#22823;&#38388;&#38548;&#20132;&#21449;&#29109;&#25439;&#22833;&#20989;&#25968;(large-margin-softmax-loss)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>传统的交叉熵损失函数还可以具体表示为：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\mathcal{L}_{\text { softmax loss }}=-\frac{1}{N} \sum_{i=1}^{N} \log \left(\frac{e^{\left\|\mathbf{W}_{y_{i}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{y_{i}}\right)}}{\sum_{j=1}^{C} e^{\left\|\mathbf{W}_{j}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{j}\right)}}\right)
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>这时，为保证分类正确需要迫使学习的参数满足：$\mathbf{W}_{1}^{\top} \boldsymbol{x}_{i}&gt;\mathbf{W}_{2}^{\top} \boldsymbol{x}_{i}$，也就是$\left\|\mathbf{W}_{\mathbf{1}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{1}\right)&gt;\left\|\mathbf{W}_{\mathbf{2}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{2}\right)$，大间隔交叉熵损失函数在此基础上引入间隔控制因子$m$，使得$\left\|\mathbf{W}_{\mathbf{1}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(m \theta_{1}\right)&gt;\left\|\mathbf{W}_{2}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{2}\right)\left(0 \leq \theta_{1} \leq \frac{\pi}{m}\right)$，$m$越大，类间间隔越大。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>大间隔交叉熵损失函数的定义为：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\mathcal{L}_{\text { large- margin softmax loss }}=-\frac{1}{N} \sum_{i=1}^{N} \log \left(\frac{e^{\left\|\mathbf{W}_{1}\right\|\left\|\boldsymbol{x}_{i}\right\| \phi\left(\theta_{y_{i}}\right)}}{e^{\left\|\mathbf{W}_{i}\right\|\left\|\boldsymbol{x}_{i}\right\| \phi\left(\theta_{y_{i}}\right)}+\sum_{j \neq y_{i}} e^{\left\|\mathbf{W}_{\mathbf{j}}\right\|\left\|\boldsymbol{x}_{i}\right\| \cos \left(\theta_{j}\right)}}\right)
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>从公式上可以发现，它将第$i$类分类间隔拉大了。关于$\phi\left(\theta_{y_{i}}\right)$：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\phi(\theta)=\left\{\begin{array}{cc}{\cos (m \theta),} &amp; {0 \leq \theta \leq \frac{\pi}{m}} \\ {\mathcal{D}(\theta),} &amp; {\frac{\pi}{m}&lt;\theta \leq \pi}\end{array}\right.
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\mathcal{D}(\theta)$只需要满足“单调递减”，一种具体的$\phi(\theta)$函数形式如下：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\phi(\theta)=(-1)^{k} \cos (m \theta)-2 k, \quad \theta \in\left[\frac{k \pi}{m}, \frac{(k+1) \pi}{m}\right]
+ $$ $k \in[0, m-1]$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>大间隔交叉熵损失函数<strong>扩大了类间距离</strong>，它的训练相比传统交叉熵损失函数更困难，这样可以起到防止模型过拟合，在分类性能上，<strong>大间隔交叉熵损失函数优于交叉熵损失函数和合页损失函数</strong>。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20013;&#24515;&#25439;&#22833;&#20989;&#25968;">&#20013;&#24515;&#25439;&#22833;&#20989;&#25968;<a class="anchor-link" href="#&#20013;&#24515;&#25439;&#22833;&#20989;&#25968;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>相比大间隔交叉熵损失函数，<strong>中心损失函数在考虑扩大类间距离的同时还考虑缩小类内差异</strong>。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>中心损失函数的定义为：
+$$ 
+\mathcal{L}_{\text { center loss }}=\frac{1}{2} \sum_{i=1}^{N}\left\|\boldsymbol{x}_{i}-\boldsymbol{c}_{y_{i}}\right\|_{2}^{2}
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>其中$\boldsymbol{c}_{y_{i}}$为第$y_{i}$类所有深度特征的均值（“中心”），它迫使所有隶属于$y_{i}$类的样本与中心不要距离过远，否则加大惩罚。实际使用，还配合考虑类间距离的损失函数使用，这样网络的最终目标函数形式可以表示为：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\begin{aligned} \mathcal{L}_{\text { final }} &amp;=\mathcal{L}_{\text { cross entropy loss }}+\lambda \mathcal{L}_{\text { center }} \operatorname{loss}\left(\boldsymbol{h}, y_{i}\right) \\ &amp;=-\frac{1}{N} \sum_{i=1}^{N} \log \left(\frac{e^{h_{y_{i}}}}{\sum_{j=1}^{C} e^{h_{j}}}\right)+\frac{\lambda}{2} \sum_{i=1}^{N}\left\|\boldsymbol{x}_{i}-\boldsymbol{c}_{y_{i}}\right\|_{2}^{2} \end{aligned}
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\lambda$为两个损失函数间的调节项。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="&#22238;&#24402;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;">&#22238;&#24402;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;<a class="anchor-link" href="#&#22238;&#24402;&#20219;&#21153;&#30340;&#30446;&#26631;&#20989;&#25968;">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>残差或预测误差用于衡量模型预测值与真实标记的靠近程度</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$l_{t}^{i}$表示样本$i$上网络回归预测值$\left(\hat{\boldsymbol{y}}^{i}\right)$与其真实标记在第$t$维的预测误差（残差）：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$l_{t}^{i}=y_{t}^{i}-\hat{y}_{t}^{i}$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="$\ell_{1}$&#25439;&#22833;&#20989;&#25968;">$\ell_{1}$&#25439;&#22833;&#20989;&#25968;<a class="anchor-link" href="#$\ell_{1}$&#25439;&#22833;&#20989;&#25968;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\mathcal{L}_{\ell_{1} \operatorname{loss}}=\frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{M}\left|l_{t}^{i}\right|
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="$\ell_{2}$&#25439;&#22833;&#20989;&#25968;">$\ell_{2}$&#25439;&#22833;&#20989;&#25968;<a class="anchor-link" href="#$\ell_{2}$&#25439;&#22833;&#20989;&#25968;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\mathcal{L}_{\ell_{2} \text { loss }}=\frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{M}\left(l_{t}^{i}\right)^{2}
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>实际使用中，$\ell_{1}$与$\ell_{2}$损失函数在回归精度上几乎相差无几，不过在一些情况下$\ell_{2}$损失函数会优于$\ell_{1}$损失函数，同时收敛速度$\ell_{2}$损失函数也比$\ell_{1}$略快。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Turkey's-biweight&#25439;&#22833;&#20989;&#25968;"><strong>Turkey's biweight</strong>&#25439;&#22833;&#20989;&#25968;<a class="anchor-link" href="#Turkey's-biweight&#25439;&#22833;&#20989;&#25968;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Turkey's biweight</strong>损失函数也是一类非凸损失函数，同Ramp Loss Function一样，可克服在回归任务中的离群点或样本噪声对模型的影响。其定义如下：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$$ 
+\mathcal{L}_{\text { Tukey's biweight loss }}=\left\{\begin{array}{l}{\frac{c^{2}}{6 N} \sum_{i=1}^{N} \sum_{t=1}^{M}\left[1-\left(1-\left(\frac{l_{t}^{i}}{c}\right)^{2}\right)^{3}\right]} &amp; {\text { if }\left|i_{t}^{i}\right| \leq c} \\ {\frac{c^{2} M}{6}} &amp; {\text { otherwise }}\end{array}\right.
+ $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>三种损失函数示意图如下：</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="./lossfunction.jpg" alt="lossfunction.png"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>不同目标函数各有特点，使用时可根据任务需要挑选合适的目标函数。</p>
+
+</div>
+</div>
+</div>
+    </div>
+  </div>
+</body>
+
+ 
+
+
+</html>
