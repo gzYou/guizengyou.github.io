@@ -430,21 +430,31 @@ body{
     #blog p {
         margin:2vh 0px;
     }
-    .details a{
+    #profile .details a{
         font-size:20px;
         margin:0px 3vw;
         padding:14px;
+          padding-top: 14px;
+          padding-bottom: 14px;
+          padding-left: 14px;
+          padding-right: 14px;
         text-align: center;
     }
-    .details{
+    #profile .details{
         text-align:center;
     }
 }
-.details{
+#profile .details{
     width:100%;
+    /* box-align:center; */
 }
-.details a{
-    color:#282828;
+#profile .details a{
+    color:#fff;
+    margin-right: 8vm;
+    margin-left: 0px;
+    border-radius:50%;
+    transition: 0.4s ease-in-out;
+    padding-right:50px;
 }
 .far .fab{
     display:inline-block;
