@@ -40,5 +40,12 @@
   "sub_title": "LaTeX学习经验分享.",
   "top_image": "https://images.unsplash.com/photo-1461773518188-b3e86f98242f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
   "visible": true
+ },
+ {
+  "url_title": "clustering",
+  "title": "clustering",
+  "sub_title": "五种常用聚类算法",
+  "top_image": "./blog/clustering/images/clustersummary.png",
+  "visible": true
  }
 ]
