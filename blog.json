@@ -61,5 +61,12 @@
   "sub_title": "A HTML Demo.",
   "top_image": "https://images.unsplash.com/photo-1553748024-d1b27fb3f960?w=1450",
   "visible": true
+ },
+ {
+  "url_title": "funny_shots",
+  "title": "funny_shots",
+  "sub_title": "The world is so beautiful.",
+  "top_image": "http://img1.dowebok.com/3143.png",
+  "visible": true
  }
 ]
