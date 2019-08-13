@@ -82,5 +82,12 @@
   "sub_title": "Coding is an Art!",
   "top_image": "https://images.unsplash.com/photo-1521776943084-9a3512bd6311?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
   "visible": true
+ },
+ {
+  "url_title": "LASSO_RIDGE",
+  "title": "LASSO Regression & RIDGE Regression",
+  "sub_title": "LASSO Regression & RIDGE Regression",
+  "top_image": "https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+  "visible": true
  }
 ]
