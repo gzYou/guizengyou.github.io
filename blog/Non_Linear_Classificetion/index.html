@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>LASSO_and_RIDGE</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Non_Linear_classifier</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -15054,7 +15054,7 @@ $( document ).ready(function(){
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div align=center>
-    <font size=5>LASSO Regression & RIDGE Regression</font>
+    <font size=5>机器学习中常见的非线性分类方法</font>
 </div>
 </div>
 </div>
@@ -15074,8 +15074,8 @@ $( document ).ready(function(){
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div align=center>
-    <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" />
-    <em>Photo by Safar Safarov on Unsplash</em>
+    <img src="https://images.unsplash.com/photo-1527891751199-7225231a68dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"/>
+    <em>Photo by <a href="https://unsplash.com/@rcjphoto">Ryan Jacobson</a> on Unsplash</em>
 </div>
 </div>
 </div>
@@ -15084,7 +15084,17 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="&#24341;&#20837;">&#24341;&#20837;<a class="anchor-link" href="#&#24341;&#20837;">&#182;</a></h4>
+<ul>
+<li><p>SVM（核技巧）</p>
+</li>
+<li><p>决策树</p>
+</li>
+<li><p>随机森林</p>
+</li>
+<li><p>GBDT</p>
+</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -15092,261 +15102,54 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>首先，我们随机生成一组数据
+<h4 id="&#38750;&#32447;&#24615;&#25903;&#25345;&#21521;&#37327;&#26426;SVM&#65288;&#26680;&#25216;&#24039;&#65289;">&#38750;&#32447;&#24615;&#25903;&#25345;&#21521;&#37327;&#26426;SVM&#65288;&#26680;&#25216;&#24039;&#65289;<a class="anchor-link" href="#&#38750;&#32447;&#24615;&#25903;&#25345;&#21521;&#37327;&#26426;SVM&#65288;&#26680;&#25216;&#24039;&#65289;">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>当数据线性可分时，我们知道如何使用SVM来进行分类(<a href="https://cuijiahua.com/blog/2017/11/ml_8_svm_1.html">了解线性SVM</a>),而当线性不可分时，SVM通过某种非线性映射（核函数kernel）将数据映射到高维空间，在这个高维空间中数据是线性可分的，在高维空间中构造最优分类超平面。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>可以通过这个视频先有个直观感受：<a href="//player.bilibili.com/player.html?aid=33852263&amp;cid=59277190&amp;page=1">SVM 分割超平面</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>这里我们直接引入线性可分时的超平面方程：
 \begin{equation}\label{eq:1}
-    y = \sin(x) + \epsilon \\
-   x \in [1\pi/3,5\pi/3]
-\end{equation}
-$\epsilon$是一个随机扰动</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">from</span> <span class="nn">matplotlib.pylab</span> <span class="k">import</span> <span class="n">rcParams</span>
-
-<span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]),</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[1]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&lt;matplotlib.lines.Line2D at 0x16bb1ea1c18&gt;]</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-
-<div class="output_png output_subarea ">
-<img src="output_5_1.png"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>因为噪点的存在，数据分布并不完全服从$\sin$曲线。现在，我们准备使用<strong>多项式回归</strong>去拟合数据分布，我们依次将$x$的1阶到15阶加入到数据中
-\begin{equation}
-\label{eq:2}
-    y = \theta _1 x^1 + ... + \theta _n x^n \\
-    n = 1,...,15
+f(x)=\sum_{i=1}^{n} \alpha_{i} y_{i} x_{i}^{T} x+b
 \end{equation}</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">16</span><span class="p">):</span>
-    <span class="n">colname</span> <span class="o">=</span> <span class="s2">&quot;x_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span>
-    <span class="n">data</span><span class="p">[</span><span class="n">colname</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="n">i</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>          x         y       x_2       x_3       x_4       x_5       x_6  \
-0  1.047198  1.065763  1.096623  1.148381  1.202581  1.259340  1.318778   
-1  1.117011  1.006086  1.247713  1.393709  1.556788  1.738948  1.942424   
-2  1.186824  0.695374  1.408551  1.671702  1.984016  2.354677  2.794587   
-3  1.256637  0.949799  1.579137  1.984402  2.493673  3.133642  3.937850   
-4  1.326450  1.063496  1.759470  2.333850  3.095735  4.106339  5.446854   
-
-        x_7       x_8        x_9       x_10       x_11       x_12       x_13  \
-0  1.381021  1.446202   1.514459   1.585938   1.660790   1.739176   1.821260   
-1  2.169709  2.423588   2.707173   3.023942   3.377775   3.773011   4.214494   
-2  3.316683  3.936319   4.671717   5.544505   6.580351   7.809718   9.268760   
-3  4.948448  6.218404   7.814277   9.819710  12.339811  15.506664  19.486248   
-4  7.224981  9.583578  12.712139  16.862020  22.366630  29.668222  39.353420   
-
-        x_14       x_15  
-0   1.907219   1.997235  
-1   4.707635   5.258479  
-2  11.000386  13.055521  
-3  24.487142  30.771450  
-4  52.200353  69.241170  
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>我们建立15个不同的线性回归模型，第$i$个模型包含从$x^1$到$x^i$变量。例如，第8个模型就包括 $\{x^1, x^2, x^3，…，x^8\}$。</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
-
-
-<span class="k">def</span> <span class="nf">linear_regression</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">models_to_plot</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;returns a list containing – [ model RSS, intercept, coef_x, coef_x2, … upto entered power ]. </span>
-<span class="sd">    ----------</span>
-<span class="sd">    power : int</span>
-<span class="sd">        Maximum power of x</span>
-<span class="sd">    </span>
-<span class="sd">    RSS ：float</span>
-<span class="sd">        Sum of square of errors between the predicted and actual values in the training data set</span>
-<span class="sd">        </span>
-<span class="sd">    models_to_plot: dict</span>
-<span class="sd">        A dict containg the model to be ploted</span>
-<span class="sd">    </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    list</span>
-<span class="sd">         [ model RSS, intercept, coef_x, coef_x2, … upto entered power ]</span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># initialize predictors:</span>
-    <span class="n">predictors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">power</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">predictors</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;x_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">power</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
-
-    <span class="c1"># Fit the model</span>
-    <span class="n">linreg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">linreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">predictors</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">linreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">predictors</span><span class="p">])</span>
-
-    <span class="c1"># Check if a plot is to be made for the entered power</span>
-    <span class="k">if</span> <span class="n">power</span> <span class="ow">in</span> <span class="n">models_to_plot</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">models_to_plot</span><span class="p">[</span><span class="n">power</span><span class="p">])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Plot for power: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">power</span><span class="p">)</span>
-
-    <span class="c1"># Return the result in pre-defined format</span>
-    <span class="n">rss</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">rss</span><span class="p">]</span>
-    <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">linreg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">])</span>
-    <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">linreg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ret</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Initialize a dataframe to store the results:</span>
-<span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rss&quot;</span><span class="p">,</span> <span class="s2">&quot;intercept&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;coef_x_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)]</span>
-<span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;model_pow_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)]</span>
-<span class="n">coef_matrix_simple</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">ind</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
-
-<span class="c1"># Define the powers for which a plot is required</span>
-<span class="n">models_to_plot</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">231</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">232</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span> <span class="mi">235</span><span class="p">,</span> <span class="mi">15</span><span class="p">:</span> <span class="mi">236</span><span class="p">}</span>
-
-<span class="c1"># Iterate through all powers and assimilate results</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">):</span>
-    <span class="n">coef_matrix_simple</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">linear_regression</span><span class="p">(</span>
-        <span class="n">data</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">models_to_plot</span><span class="o">=</span><span class="n">models_to_plot</span>
-    <span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-
-<div class="output_png output_subarea ">
-<img src="output_10_0.png"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>我们发现，随着$x$阶数的增加，模型力图去拟合所有的数据点，尽管这样使得拟合的精确度越来越高，但是根据我们的经验，我们知道，模型已经过拟合。</p>
+<p>其中，$y_i \in \{+1,-1\}$表示样本 $x_i$的标签,$\alpha_i$表示各项对应的拉格朗日乘子，$Support Vector$对应的$\alpha_i \ne 0$,非$Support Vector$对应的 $\alpha_i = 0$,法向量$w=\sum_{i=1}^{n} a_{i} y_{i} x_{i}$。</p>
 
 </div>
 </div>
@@ -15355,390 +15158,10 @@ $\epsilon$是一个随机扰动</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>这是为什么呢？我们看下刚刚模型回归的系数：</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Set the display format to be scientific for ease of analysis</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:,.2g}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span>
-<span class="n">coef_matrix_simple</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[6]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>rss</th>
-      <th>intercept</th>
-      <th>coef_x_1</th>
-      <th>coef_x_2</th>
-      <th>coef_x_3</th>
-      <th>coef_x_4</th>
-      <th>coef_x_5</th>
-      <th>coef_x_6</th>
-      <th>coef_x_7</th>
-      <th>coef_x_8</th>
-      <th>coef_x_9</th>
-      <th>coef_x_10</th>
-      <th>coef_x_11</th>
-      <th>coef_x_12</th>
-      <th>coef_x_13</th>
-      <th>coef_x_14</th>
-      <th>coef_x_15</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>model_pow_1</th>
-      <td>3.3</td>
-      <td>2</td>
-      <td>-0.62</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_2</th>
-      <td>3.3</td>
-      <td>1.9</td>
-      <td>-0.58</td>
-      <td>-0.006</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_3</th>
-      <td>1.1</td>
-      <td>-1.1</td>
-      <td>3</td>
-      <td>-1.3</td>
-      <td>0.14</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_4</th>
-      <td>1.1</td>
-      <td>-0.27</td>
-      <td>1.7</td>
-      <td>-0.53</td>
-      <td>-0.036</td>
-      <td>0.014</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_5</th>
-      <td>1</td>
-      <td>3</td>
-      <td>-5.1</td>
-      <td>4.7</td>
-      <td>-1.9</td>
-      <td>0.33</td>
-      <td>-0.021</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_6</th>
-      <td>0.99</td>
-      <td>-2.8</td>
-      <td>9.5</td>
-      <td>-9.7</td>
-      <td>5.2</td>
-      <td>-1.6</td>
-      <td>0.23</td>
-      <td>-0.014</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_7</th>
-      <td>0.93</td>
-      <td>19</td>
-      <td>-56</td>
-      <td>69</td>
-      <td>-45</td>
-      <td>17</td>
-      <td>-3.5</td>
-      <td>0.4</td>
-      <td>-0.019</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_8</th>
-      <td>0.92</td>
-      <td>43</td>
-      <td>-1.4e+02</td>
-      <td>1.8e+02</td>
-      <td>-1.3e+02</td>
-      <td>58</td>
-      <td>-15</td>
-      <td>2.4</td>
-      <td>-0.21</td>
-      <td>0.0077</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_9</th>
-      <td>0.87</td>
-      <td>1.7e+02</td>
-      <td>-6.1e+02</td>
-      <td>9.6e+02</td>
-      <td>-8.5e+02</td>
-      <td>4.6e+02</td>
-      <td>-1.6e+02</td>
-      <td>37</td>
-      <td>-5.2</td>
-      <td>0.42</td>
-      <td>-0.015</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_10</th>
-      <td>0.87</td>
-      <td>1.4e+02</td>
-      <td>-4.9e+02</td>
-      <td>7.3e+02</td>
-      <td>-6e+02</td>
-      <td>2.9e+02</td>
-      <td>-87</td>
-      <td>15</td>
-      <td>-0.81</td>
-      <td>-0.14</td>
-      <td>0.026</td>
-      <td>-0.0013</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_11</th>
-      <td>0.87</td>
-      <td>-75</td>
-      <td>5.1e+02</td>
-      <td>-1.3e+03</td>
-      <td>1.9e+03</td>
-      <td>-1.6e+03</td>
-      <td>9.1e+02</td>
-      <td>-3.5e+02</td>
-      <td>91</td>
-      <td>-16</td>
-      <td>1.8</td>
-      <td>-0.12</td>
-      <td>0.0034</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_12</th>
-      <td>0.87</td>
-      <td>-3.4e+02</td>
-      <td>1.9e+03</td>
-      <td>-4.4e+03</td>
-      <td>6e+03</td>
-      <td>-5.2e+03</td>
-      <td>3.1e+03</td>
-      <td>-1.3e+03</td>
-      <td>3.8e+02</td>
-      <td>-80</td>
-      <td>12</td>
-      <td>-1.1</td>
-      <td>0.062</td>
-      <td>-0.0016</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_13</th>
-      <td>0.86</td>
-      <td>3.2e+03</td>
-      <td>-1.8e+04</td>
-      <td>4.5e+04</td>
-      <td>-6.7e+04</td>
-      <td>6.6e+04</td>
-      <td>-4.6e+04</td>
-      <td>2.3e+04</td>
-      <td>-8.5e+03</td>
-      <td>2.3e+03</td>
-      <td>-4.5e+02</td>
-      <td>62</td>
-      <td>-5.7</td>
-      <td>0.31</td>
-      <td>-0.0078</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_14</th>
-      <td>0.79</td>
-      <td>2.4e+04</td>
-      <td>-1.4e+05</td>
-      <td>3.8e+05</td>
-      <td>-6.1e+05</td>
-      <td>6.6e+05</td>
-      <td>-5e+05</td>
-      <td>2.8e+05</td>
-      <td>-1.2e+05</td>
-      <td>3.7e+04</td>
-      <td>-8.5e+03</td>
-      <td>1.5e+03</td>
-      <td>-1.8e+02</td>
-      <td>15</td>
-      <td>-0.73</td>
-      <td>0.017</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>model_pow_15</th>
-      <td>0.7</td>
-      <td>-3.6e+04</td>
-      <td>2.4e+05</td>
-      <td>-7.5e+05</td>
-      <td>1.4e+06</td>
-      <td>-1.7e+06</td>
-      <td>1.5e+06</td>
-      <td>-1e+06</td>
-      <td>5e+05</td>
-      <td>-1.9e+05</td>
-      <td>5.4e+04</td>
-      <td>-1.2e+04</td>
-      <td>1.9e+03</td>
-      <td>-2.2e+02</td>
-      <td>17</td>
-      <td>-0.81</td>
-      <td>0.018</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>一个很明显的趋势是，系数的量级从个位数增加到了十万甚至百万量级，直觉上讲，就是大的系数可以对$x$的微小变动进行放大，然后通过正负项的叠加尽量把包括噪声在内的每个数据点都拟合上。</p>
+<p>将公式$\ref{eq:1}$表达为内积形式：</p>
+<p>\begin{equation}\label{eq:2}
+f(\boldsymbol{x})=\sum_{i=1}^{n} \alpha_{i} y_{i}\left\langle\boldsymbol{x}_{i}, \boldsymbol{x}\right\rangle+ b
+\end{equation}</p>
 
 </div>
 </div>
@@ -15747,7 +15170,10 @@ $\epsilon$是一个随机扰动</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>这样的问题（过拟合）怎么解决呢？直觉的解决办法就是引入惩罚机制，比如$L1$和$L2$正则化。<strong>LASSO</strong>和<strong>RIDGE</strong>就是使用了这些方法。</p>
+<p>当线性不可分时，我们希望存在一个映射$\phi$能将数据映射到另外的特征空间，在新的特征空间中使用线性分类器：</p>
+<p>\begin{equation}\label{eq:3}
+f(\boldsymbol{x})=\sum_{i=1}^{n} \alpha_{i} y_{i}\left\langle\emptyset\left(\boldsymbol{x}_{i}\right), \emptyset(\boldsymbol{x})\right\rangle+ b
+\end{equation}</p>
 
 </div>
 </div>
@@ -15756,15 +15182,7 @@ $\epsilon$是一个随机扰动</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="LASSO-Regression">LASSO Regression<a class="anchor-link" href="#LASSO-Regression">&#182;</a></h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>LASSO</strong>全称<em>Least Absolute Shrinkage and Selection Operator</em>，它使用了$L1$正则化<em>(L1 Regularization)</em>。</p>
+<p>那么，核函数是指这样的一个函数$K$，对于所有的$x,z \in \mathrm{X}$，满足$K(\mathrm{x}, \mathrm{z})=&lt;\phi(\mathrm{x}), \phi(\mathrm{z})&gt;$,使用这样的核函数有什么好处呢？简而言之，如果没有核函数，我们就要分两步，第一，将$x,z$显示的映射到新的特征空间后得到$\phi(\mathrm{x}), \phi(\mathrm{z})$；第二，计算$\phi(\mathrm{x}), \phi(\mathrm{z})$的内积。有了核函数，没有显示映射这一步，直接求最后的内积结果。</p>
 
 </div>
 </div>
@@ -15773,11 +15191,7 @@ $\epsilon$是一个随机扰动</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>它在之前目标函数的基础上，增加了对系数绝对值的惩罚：
-\begin{equation}\label{eq:3}
- argmin(y-wx)^2 + \alpha|w|
-\end{equation}
-这样做的目标是想达到一个平衡：第一，拟合的<strong>误差要小</strong>；第二，系数的绝对值不能太大，模型的<strong>结构不能太复杂</strong>。</p>
+<p>这种将内积替换成核函数的方式就叫做核技巧$(Kernel Trick)$。</p>
 
 </div>
 </div>
@@ -15786,12 +15200,7 @@ $\epsilon$是一个随机扰动</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$\alpha$可以取不同的值：</p>
-<ul>
-<li>$\alpha = 0$:与简单线性回归获得的系数相同.</li>
-<li>$\alpha = \infty$:所有系数变为0.</li>
-<li>$ 0 &lt; \alpha &lt; \infty$:系数介于前两种情况之间.</li>
-</ul>
+<hr>
 
 </div>
 </div>
@@ -15800,388 +15209,8 @@ $\epsilon$是一个随机扰动</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>现在使用LASSO回归去拟合相同的数据：</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">Lasso</span>
-
-
-<span class="k">def</span> <span class="nf">lasso_regression</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">predictors</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">models_to_plot</span><span class="o">=</span><span class="p">{}):</span>
-    <span class="n">lassoreg</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mf">1e5</span><span class="p">)</span>
-    <span class="n">lassoreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">predictors</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">lassoreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">predictors</span><span class="p">])</span>
-
-    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">models_to_plot</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">models_to_plot</span><span class="p">[</span><span class="n">alpha</span><span class="p">])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Plot for alpha: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">alpha</span><span class="p">)</span>
-
-    <span class="n">rss</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">rss</span><span class="p">]</span>
-    <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">lassoreg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">])</span>
-    <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lassoreg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ret</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">predictors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
-<span class="n">predictors</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;x_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">16</span><span class="p">)])</span>
-
-<span class="c1"># Define the alpha values to test</span>
-<span class="n">alpha_lasso</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-15</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-
-<span class="c1"># Initialize the dataframe to store coefficients</span>
-<span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rss&quot;</span><span class="p">,</span> <span class="s2">&quot;intercept&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;coef_x_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)]</span>
-<span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;alpha_</span><span class="si">%.2g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">alpha_lasso</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
-<span class="n">coef_matrix_lasso</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">ind</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
-<span class="c1"># Define the models to plot</span>
-<span class="n">models_to_plot</span> <span class="o">=</span> <span class="p">{</span><span class="mf">1e-10</span><span class="p">:</span> <span class="mi">231</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">:</span> <span class="mi">232</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">:</span> <span class="mi">233</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">:</span> <span class="mi">234</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">:</span> <span class="mi">235</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">236</span><span class="p">}</span>
-
-<span class="c1"># Iterate over the 10 alpha values:</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">coef_matrix_lasso</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,]</span> <span class="o">=</span> <span class="n">lasso_regression</span><span class="p">(</span>
-        <span class="n">data</span><span class="p">,</span> <span class="n">predictors</span><span class="p">,</span> <span class="n">alpha_lasso</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">models_to_plot</span>
-    <span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>c:\users\you\anaconda3\lib\site-packages\sklearn\linear_model\coordinate_descent.py:491: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations. Fitting data with very small alpha may cause precision problems.
-  ConvergenceWarning)
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-
-<div class="output_png output_subarea ">
-<img src="output_22_1.png"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">coef_matrix_lasso</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[11]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>rss</th>
-      <th>intercept</th>
-      <th>coef_x_1</th>
-      <th>coef_x_2</th>
-      <th>coef_x_3</th>
-      <th>coef_x_4</th>
-      <th>coef_x_5</th>
-      <th>coef_x_6</th>
-      <th>coef_x_7</th>
-      <th>coef_x_8</th>
-      <th>coef_x_9</th>
-      <th>coef_x_10</th>
-      <th>coef_x_11</th>
-      <th>coef_x_12</th>
-      <th>coef_x_13</th>
-      <th>coef_x_14</th>
-      <th>coef_x_15</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>alpha_1e-15</th>
-      <td>0.96</td>
-      <td>0.22</td>
-      <td>1.1</td>
-      <td>-0.37</td>
-      <td>0.00089</td>
-      <td>0.0016</td>
-      <td>-0.00012</td>
-      <td>-6.4e-05</td>
-      <td>-6.3e-06</td>
-      <td>1.4e-06</td>
-      <td>7.8e-07</td>
-      <td>2.1e-07</td>
-      <td>4e-08</td>
-      <td>5.4e-09</td>
-      <td>1.8e-10</td>
-      <td>-2e-10</td>
-      <td>-9.2e-11</td>
-    </tr>
-    <tr>
-      <th>alpha_1e-10</th>
-      <td>0.96</td>
-      <td>0.22</td>
-      <td>1.1</td>
-      <td>-0.37</td>
-      <td>0.00088</td>
-      <td>0.0016</td>
-      <td>-0.00012</td>
-      <td>-6.4e-05</td>
-      <td>-6.3e-06</td>
-      <td>1.4e-06</td>
-      <td>7.8e-07</td>
-      <td>2.1e-07</td>
-      <td>4e-08</td>
-      <td>5.4e-09</td>
-      <td>1.8e-10</td>
-      <td>-2e-10</td>
-      <td>-9.2e-11</td>
-    </tr>
-    <tr>
-      <th>alpha_1e-08</th>
-      <td>0.96</td>
-      <td>0.22</td>
-      <td>1.1</td>
-      <td>-0.37</td>
-      <td>0.00077</td>
-      <td>0.0016</td>
-      <td>-0.00011</td>
-      <td>-6.4e-05</td>
-      <td>-6.3e-06</td>
-      <td>1.4e-06</td>
-      <td>7.8e-07</td>
-      <td>2.1e-07</td>
-      <td>4e-08</td>
-      <td>5.3e-09</td>
-      <td>2e-10</td>
-      <td>-1.9e-10</td>
-      <td>-9.3e-11</td>
-    </tr>
-    <tr>
-      <th>alpha_1e-05</th>
-      <td>0.96</td>
-      <td>0.5</td>
-      <td>0.6</td>
-      <td>-0.13</td>
-      <td>-0.038</td>
-      <td>-0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>7.7e-06</td>
-      <td>1e-06</td>
-      <td>7.7e-08</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-0</td>
-      <td>-7e-11</td>
-    </tr>
-    <tr>
-      <th>alpha_0.0001</th>
-      <td>1</td>
-      <td>0.9</td>
-      <td>0.17</td>
-      <td>-0</td>
-      <td>-0.048</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>9.5e-06</td>
-      <td>5.1e-07</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-4.4e-11</td>
-    </tr>
-    <tr>
-      <th>alpha_0.001</th>
-      <td>1.7</td>
-      <td>1.3</td>
-      <td>-0</td>
-      <td>-0.13</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1.5e-08</td>
-      <td>7.5e-10</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>alpha_0.01</th>
-      <td>3.6</td>
-      <td>1.8</td>
-      <td>-0.55</td>
-      <td>-0.00056</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>alpha_1</th>
-      <td>37</td>
-      <td>0.038</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-    </tr>
-    <tr>
-      <th>alpha_5</th>
-      <td>37</td>
-      <td>0.038</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-    </tr>
-    <tr>
-      <th>alpha_10</th>
-      <td>37</td>
-      <td>0.038</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-      <td>-0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>我们发现有这么几个特点：</p>
-<ul>
-<li>随着惩罚系数$\alpha$的增加，越来越多的系数变成了0.</li>
-<li>系数控制在了合理区间内.</li>
-<li>随着惩罚系数$\alpha$的增加，误差变小又变大，最终出现了欠拟合问题.</li>
-</ul>
+<p>举个例子，现在二维平面上存在若干点，点集$A$服从$\left\{x, y | x^{\wedge} 2+y^{\wedge} 2=1\right\}$，点集$B$服从$\left\{x, y | x^{\wedge} 2+y^{\wedge} 2=9\right\}$。</p>
+<p><img src="https://www.cuijiahua.com/wp-content/uploads/2017/11/ml_9_6.png" /></p>
 
 </div>
 </div>
@@ -16190,7 +15219,9 @@ $\epsilon$是一个随机扰动</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="RIDGE-Regression">RIDGE Regression<a class="anchor-link" href="#RIDGE-Regression">&#182;</a></h4>
+<p>很显然，红蓝点集是线性不可分的，现在做一下映射变化$(x, y) \rightarrow\left(x, y, x^{\wedge} 2+y^{\wedge} 2\right)$，变换后在三维空间中点的分布为：</p>
+<p><img src="https://www.cuijiahua.com/wp-content/uploads/2017/11/ml_9_7.png" /></p>
+
 </div>
 </div>
 </div>
@@ -16198,9 +15229,37 @@ $\epsilon$是一个随机扰动</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>顺便说下<strong>RIDGE</strong>，它使用了$𝐿2$正则化<em>(L2 Regularization)</em>,它的目标函数是</p>
+<p>现在再看两个点集就是线性可分的，用一个平面去分割。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>再看一个更一般的例子：</p>
+<p><img src="https://www.cuijiahua.com/wp-content/uploads/2017/11/ml_9_8.png" /></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>现在红蓝点集服从两个椭圆分布，一个理想的分界线应该是一个椭圆，假如二维平面的两个坐标轴是$X_{1}$和$X_{2}$，那么这个分解椭圆的一般方程是：</p>
 <p>\begin{equation}\label{eq:4}
-argmin(y-wx)^2 + \alpha w^2
+a_{1} X_{1}+a_{2} X_{1}^{2}+a_{3} X_{2}+a_{4} X_{2}^{2}+a_{5} X_{1} X_{2}+a_{6}=0
 \end{equation}</p>
 
 </div>
@@ -16210,381 +15269,91 @@ argmin(y-wx)^2 + \alpha w^2
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>我们使用RIDGE对同样的数据进行拟合，处理过程与LASSO相似：</p>
+<p>现在，我们换一种形式，令：</p>
+<p>\begin{equation}\label{eq:5}
+\mathrm{Z}_{1}=\mathrm{X}_{1}, \mathrm{Z}_{2}=X_{1}^{2}, \mathrm{Z}_{3}=X_{2}, \mathrm{Z}_{4}=X_{2}^{2}, \mathrm{Z}_{5}=X_{1} X_{2}
+\end{equation}</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">Ridge</span>
-
-
-<span class="k">def</span> <span class="nf">ridge_regression</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">predictors</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">models_to_plot</span><span class="o">=</span><span class="p">{}):</span>
-    <span class="c1"># Fit the model</span>
-    <span class="n">ridgereg</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">ridgereg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">predictors</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">ridgereg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">predictors</span><span class="p">])</span>
-
-    <span class="c1"># Check if a plot is to be made for the entered alpha</span>
-    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">models_to_plot</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">models_to_plot</span><span class="p">[</span><span class="n">alpha</span><span class="p">])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Plot for alpha: </span><span class="si">%.3g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">alpha</span><span class="p">)</span>
-
-    <span class="c1"># Return the result in pre-defined format</span>
-    <span class="n">rss</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">rss</span><span class="p">]</span>
-    <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">ridgereg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">])</span>
-    <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ridgereg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ret</span>
-
-
-<span class="c1"># Initialize predictors to be set of 15 powers of x</span>
-<span class="n">predictors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
-<span class="n">predictors</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;x_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">16</span><span class="p">)])</span>
-
-<span class="c1"># Set the different values of alpha to be tested</span>
-<span class="n">alpha_ridge</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-15</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
-
-<span class="c1"># Initialize the dataframe for storing coefficients.</span>
-<span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rss&quot;</span><span class="p">,</span> <span class="s2">&quot;intercept&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;coef_x_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)]</span>
-<span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;alpha_</span><span class="si">%.2g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">alpha_ridge</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
-<span class="n">coef_matrix_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">ind</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
-
-<span class="n">models_to_plot</span> <span class="o">=</span> <span class="p">{</span><span class="mf">1e-15</span><span class="p">:</span> <span class="mi">231</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">:</span> <span class="mi">232</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">:</span> <span class="mi">233</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">:</span> <span class="mi">234</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">:</span> <span class="mi">235</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mi">236</span><span class="p">}</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">coef_matrix_ridge</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,]</span> <span class="o">=</span> <span class="n">ridge_regression</span><span class="p">(</span>
-        <span class="n">data</span><span class="p">,</span> <span class="n">predictors</span><span class="p">,</span> <span class="n">alpha_ridge</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">models_to_plot</span>
-    <span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>c:\users\you\anaconda3\lib\site-packages\scipy\linalg\basic.py:40: RuntimeWarning: scipy.linalg.solve
-Ill-conditioned matrix detected. Result is not guaranteed to be accurate.
-Reciprocal condition number/precision: 3.493840061759174e-17 / 1.1102230246251565e-16
-  RuntimeWarning)
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-
-<div class="output_png output_subarea ">
-<img src="output_28_1.png"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">coef_matrix_ridge</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[13]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>rss</th>
-      <th>intercept</th>
-      <th>coef_x_1</th>
-      <th>coef_x_2</th>
-      <th>coef_x_3</th>
-      <th>coef_x_4</th>
-      <th>coef_x_5</th>
-      <th>coef_x_6</th>
-      <th>coef_x_7</th>
-      <th>coef_x_8</th>
-      <th>coef_x_9</th>
-      <th>coef_x_10</th>
-      <th>coef_x_11</th>
-      <th>coef_x_12</th>
-      <th>coef_x_13</th>
-      <th>coef_x_14</th>
-      <th>coef_x_15</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>alpha_1e-15</th>
-      <td>0.87</td>
-      <td>94</td>
-      <td>-3e+02</td>
-      <td>3.8e+02</td>
-      <td>-2.3e+02</td>
-      <td>65</td>
-      <td>0.56</td>
-      <td>-4.3</td>
-      <td>0.39</td>
-      <td>0.2</td>
-      <td>-0.028</td>
-      <td>-0.0069</td>
-      <td>0.0012</td>
-      <td>0.00019</td>
-      <td>-5.6e-05</td>
-      <td>4.1e-06</td>
-      <td>-7.8e-08</td>
-    </tr>
-    <tr>
-      <th>alpha_1e-10</th>
-      <td>0.92</td>
-      <td>11</td>
-      <td>-29</td>
-      <td>31</td>
-      <td>-15</td>
-      <td>2.9</td>
-      <td>0.17</td>
-      <td>-0.091</td>
-      <td>-0.011</td>
-      <td>0.002</td>
-      <td>0.00064</td>
-      <td>2.4e-05</td>
-      <td>-2e-05</td>
-      <td>-4.2e-06</td>
-      <td>2.2e-07</td>
-      <td>2.3e-07</td>
-      <td>-2.3e-08</td>
-    </tr>
-    <tr>
-      <th>alpha_1e-08</th>
-      <td>0.95</td>
-      <td>1.3</td>
-      <td>-1.5</td>
-      <td>1.7</td>
-      <td>-0.68</td>
-      <td>0.039</td>
-      <td>0.016</td>
-      <td>0.00016</td>
-      <td>-0.00036</td>
-      <td>-5.4e-05</td>
-      <td>-2.9e-07</td>
-      <td>1.1e-06</td>
-      <td>1.9e-07</td>
-      <td>2e-08</td>
-      <td>3.9e-09</td>
-      <td>8.2e-10</td>
-      <td>-4.6e-10</td>
-    </tr>
-    <tr>
-      <th>alpha_0.0001</th>
-      <td>0.96</td>
-      <td>0.56</td>
-      <td>0.55</td>
-      <td>-0.13</td>
-      <td>-0.026</td>
-      <td>-0.0028</td>
-      <td>-0.00011</td>
-      <td>4.1e-05</td>
-      <td>1.5e-05</td>
-      <td>3.7e-06</td>
-      <td>7.4e-07</td>
-      <td>1.3e-07</td>
-      <td>1.9e-08</td>
-      <td>1.9e-09</td>
-      <td>-1.3e-10</td>
-      <td>-1.5e-10</td>
-      <td>-6.2e-11</td>
-    </tr>
-    <tr>
-      <th>alpha_0.001</th>
-      <td>1</td>
-      <td>0.82</td>
-      <td>0.31</td>
-      <td>-0.087</td>
-      <td>-0.02</td>
-      <td>-0.0028</td>
-      <td>-0.00022</td>
-      <td>1.8e-05</td>
-      <td>1.2e-05</td>
-      <td>3.4e-06</td>
-      <td>7.3e-07</td>
-      <td>1.3e-07</td>
-      <td>1.9e-08</td>
-      <td>1.7e-09</td>
-      <td>-1.5e-10</td>
-      <td>-1.4e-10</td>
-      <td>-5.2e-11</td>
-    </tr>
-    <tr>
-      <th>alpha_0.01</th>
-      <td>1.4</td>
-      <td>1.3</td>
-      <td>-0.088</td>
-      <td>-0.052</td>
-      <td>-0.01</td>
-      <td>-0.0014</td>
-      <td>-0.00013</td>
-      <td>7.2e-07</td>
-      <td>4.1e-06</td>
-      <td>1.3e-06</td>
-      <td>3e-07</td>
-      <td>5.6e-08</td>
-      <td>9e-09</td>
-      <td>1.1e-09</td>
-      <td>4.3e-11</td>
-      <td>-3.1e-11</td>
-      <td>-1.5e-11</td>
-    </tr>
-    <tr>
-      <th>alpha_1</th>
-      <td>5.6</td>
-      <td>0.97</td>
-      <td>-0.14</td>
-      <td>-0.019</td>
-      <td>-0.003</td>
-      <td>-0.00047</td>
-      <td>-7e-05</td>
-      <td>-9.9e-06</td>
-      <td>-1.3e-06</td>
-      <td>-1.4e-07</td>
-      <td>-9.3e-09</td>
-      <td>1.3e-09</td>
-      <td>7.8e-10</td>
-      <td>2.4e-10</td>
-      <td>6.2e-11</td>
-      <td>1.4e-11</td>
-      <td>3.2e-12</td>
-    </tr>
-    <tr>
-      <th>alpha_5</th>
-      <td>14</td>
-      <td>0.55</td>
-      <td>-0.059</td>
-      <td>-0.0085</td>
-      <td>-0.0014</td>
-      <td>-0.00024</td>
-      <td>-4.1e-05</td>
-      <td>-6.9e-06</td>
-      <td>-1.1e-06</td>
-      <td>-1.9e-07</td>
-      <td>-3.1e-08</td>
-      <td>-5.1e-09</td>
-      <td>-8.2e-10</td>
-      <td>-1.3e-10</td>
-      <td>-2e-11</td>
-      <td>-3e-12</td>
-      <td>-4.2e-13</td>
-    </tr>
-    <tr>
-      <th>alpha_10</th>
-      <td>18</td>
-      <td>0.4</td>
-      <td>-0.037</td>
-      <td>-0.0055</td>
-      <td>-0.00095</td>
-      <td>-0.00017</td>
-      <td>-3e-05</td>
-      <td>-5.2e-06</td>
-      <td>-9.2e-07</td>
-      <td>-1.6e-07</td>
-      <td>-2.9e-08</td>
-      <td>-5.1e-09</td>
-      <td>-9.1e-10</td>
-      <td>-1.6e-10</td>
-      <td>-2.9e-11</td>
-      <td>-5.1e-12</td>
-      <td>-9.1e-13</td>
-    </tr>
-    <tr>
-      <th>alpha_20</th>
-      <td>23</td>
-      <td>0.28</td>
-      <td>-0.022</td>
-      <td>-0.0034</td>
-      <td>-0.0006</td>
-      <td>-0.00011</td>
-      <td>-2e-05</td>
-      <td>-3.6e-06</td>
-      <td>-6.6e-07</td>
-      <td>-1.2e-07</td>
-      <td>-2.2e-08</td>
-      <td>-4e-09</td>
-      <td>-7.5e-10</td>
-      <td>-1.4e-10</td>
-      <td>-2.5e-11</td>
-      <td>-4.7e-12</td>
-      <td>-8.7e-13</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>它的特点是：</p>
+<p>那么公式$\ref{eq:4}$就变成了如下形式：</p>
+<p>\begin{equation}\label{eq:6}
+\sum_{i=1}^{5} a_{i} Z_{i}+a_{6}=0
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>由公式$\ref{eq:4}$到公式$\ref{eq:6}$,我们相当于做了一个由二维到五维空间的特征映射，二维空间的线性不可分就变成了五维空间的线性可分。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>现在，我们再假设一个这样的映射函数：</p>
+<p>\begin{equation}\label{eq:7}
+\emptyset\left(\left(x_{1}, x_{2}\right)\right)=\left(\sqrt{2} x_{1}, x_{1}^{2}, \sqrt{2} x_{2}, x_{2}^{2}, \sqrt{2} x_{1} x_{2}, 1\right)
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>这是一个二维映射到五维的例子，对于两个向量$a_1=(x_1, x_2)$,$a_2=(y_1, y_2)$我们要计算映射到五维空间后两个向量的内积：</p>
+<p>\begin{equation}\label{eq:8}
+\left\langle\phi\left(\left(x_{1}, x_{2}\right)\right), \phi\left(\left(y_{1}, y_{2}\right)\right)\right\rangle=2 x_{1} y_{1}+x_{1}^{2} y_{1}^{2}+2 x_{2} y_{2}+x_{2}^{2} y_{2}^{2}+2 x_{1} x_{2} y_{1} y_{2}+1
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>另外，我们不进行映射计算，直接计算下面的公式：</p>
+<p>\begin{equation}\label{eq:9}
+\left(\left\langle a_{1}, a_{2}\right\rangle+ 1\right)^{2}=2 x_{1} y_{1}+x_{1}^{2} y_{1}^{2}+2 x_{2} y_{2}+x_{2}^{2} y_{2}^{2}+2 x_{1} x_{2} y_{1} y_{2}+1
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>你会发现，两个公式的计算结果是相同的，区别是什么呢？</p>
+<p><strong>重点来了：</strong></p>
 <ul>
-<li>随着惩罚系数$\alpha$的增加，越来越多的系数会变得很小，但不会到0.</li>
-<li>随着惩罚系数$\alpha$的不断增加，最终也会出现欠拟合的问题，但相比于同水平下的LASSO,RIDGE的欠拟合程度会轻一些.</li>
-<li>因为系数一直不到0，所以没有办法做变量选择.</li>
+<li><p>一个是根据映射函数，映射到高维空间中，然后再根据内积的公式进行计算，计算量大；</p>
+</li>
+<li><p>另一个则直接在原来的低维空间中进行计算，而不需要显式地写出映射后的结果，计算量小。</p>
+</li>
 </ul>
 
 </div>
@@ -16594,9 +15363,7 @@ Reciprocal condition number/precision: 3.493840061759174e-17 / 1.110223024625156
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>如何选择合适的$\alpha$呢？</p>
-<p>LASSO和RIDGE一般用赤池信息准则(AIC)或贝叶斯信息准则(BIC)来选择$\alpha$，AIC大致是关于惩罚力度的U型函数，条件形同的情况下AIC越小越好，直接选取AIC最低点对应的惩罚力度$\alpha$。
-<img src="https://pic2.zhimg.com/v2-90a4685daecaf241520a09ea74540abf_r.jpg" /></p>
+<p>其实，聪明的你早就看出来了，这个$\left(\left\langle a_{1}, a_{2}\right\rangle+ 1\right)^{2}$不就是一个核函数嘛，没错，我们通过这个核函数$k\left(a_{1}, a_{2}\right)=\left(\left\langle a_{1}, a_{2}\right\rangle+ 1\right)^{2}$的低维运算得到了先映射再内积的高维运算的结果，这就是核函数的神奇之处，它有效减少了我们的计算量。在这个例子中，我们对一个2维空间做映射，映射后的新空间是原来空间所有一阶和二阶的组合，得到了5维的新空间；如果原空间是3维的，那么我们会得到19维的新空间，这个数目是呈爆炸性增长的。如果我们使用$\phi(·)$做映射计算，难度非常大，而且如果遇到无穷维的情况，就根本无从计算了。所以使用核函数进行计算是非常有必要的。</p>
 
 </div>
 </div>
@@ -16605,7 +15372,196 @@ Reciprocal condition number/precision: 3.493840061759174e-17 / 1.110223024625156
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="&#24635;&#32467;">&#24635;&#32467;<a class="anchor-link" href="#&#24635;&#32467;">&#182;</a></h4>
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>那么问题来了，核函数从哪来？事实上，构造核函数一般来讲是一件很困难的事，通常人们会从一些常用的核函数中进行选择，根据问题和数据的不同，选择不同的参数，得到不同的核函数。径向基核函数是SVM中常用的一个核函数，径向基核函数的高斯版本的公式如下：</p>
+<p>\begin{equation}\label{eq:10}
+\kappa\left(x_{1}, x_{2}\right)=\exp \left\{-\frac{\left\|x_{1}-x_{2}\right\|^{2}}{2 \sigma^{2}}\right\}
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>参数$\sigma$与$LASSO$算法中的惩罚因子$\alpha$类似，如果$\sigma$选得很大的话，高次特征上的权重实际上衰减得非常快，如果$\sigma$选得很小，则可以将任意的数据映射为线性可分，但随之而来的可能是非常严重的过拟合问题。总的来说，通过调控参数$\sigma$，高斯核实际上具有相当高的灵活性，也是使用最广泛的核函数之一。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="&#20915;&#31574;&#26641;(Decision-Tree)">&#20915;&#31574;&#26641;(Decision Tree)<a class="anchor-link" href="#&#20915;&#31574;&#26641;(Decision-Tree)">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>决策树是一种基本的<strong>分类</strong>与<strong>回归</strong>算法，是一种监督学习(Supervised Learning)算法，顾名思义，决策树呈树形结构，在分类问题中，表示基于特征对实例进行分类的过程，树内部节点表示一个特征或者属性，叶节点表示一个类。</p>
+<div align=center>
+    <img src="https://cuijiahua.com/wp-content/uploads/2017/11/m_2_1.jpg" />
+    <em>图片来源：https://cuijiahua.com/blog/2017/11/ml_2_decision_tree_1.html</em>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>可以将决策树看成是一个$if-then$规则的集合，将决策树转换成$if-then$规则的过程是这样的：由决策树的根节点到叶节点的每一条路径构建一条规则；路径上内部节点特征对应着条件，而叶节点的类对应着结论。决策树的路径或其对应的$if-then$规则集合有一个重要的性质：<strong>互斥且完备</strong>，也就是说每一个实例都被一条路径或者一条规则覆盖，而且只被一条路径或者一条规则覆盖。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>决策树学习通常包括三个步骤：</p>
+<ul>
+<li><p>特征选择</p>
+</li>
+<li><p>决策树生成</p>
+</li>
+<li><p>决策树修剪</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="&#29305;&#24449;&#36873;&#25321;">&#29305;&#24449;&#36873;&#25321;<a class="anchor-link" href="#&#29305;&#24449;&#36873;&#25321;">&#182;</a></h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>特征选择在于选取对训练数据具有分类能力的特征，一般遵从两个准侧：<strong>信息增益</strong>和<strong>信息增益比</strong>。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>在内容展开之前，需要先了解两个概念——熵和条件熵。在热力学中，熵的物理意义是体系混乱程度或者不稳定性的度量，在信息论与概率统计中，熵是表示<strong>随机变量不确定性</strong>的度量。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>假设$X$是一个取有限个值的离散随机变量，其概率分布为：</p>
+<p>\begin{equation}\label{eq:11}
+P\left(X=x_{i}\right)=p_{i}, i=1,2, \cdots, n
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>那么，随机变量$X$的熵定义为：</p>
+<p>\begin{equation}\label{eq:12}
+H(X)=-\sum_{i=1}^{n} p_{i} \log \left(p_{i}\right)
+\end{equation}</p>
+<p>熵越大，不确定性越大。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>条件熵是表示在已知随机变量$X$的条件下随机变量$Y$的不确定性。</p>
+<p>\begin{equation}\label{eq:13}
+H(Y | X)=\sum_{i=1}^{n} p_{i} H\left(Y | X=x_{i}\right)\\
+p_{i}=P\left(X=x_{i}\right)
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>当熵和条件熵中的概率是由数据估计（特别是极大似然估计）得到时，所对应的熵和条件熵分别称为经验熵和经验条件熵。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="&#20449;&#24687;&#22686;&#30410;">&#20449;&#24687;&#22686;&#30410;<a class="anchor-link" href="#&#20449;&#24687;&#22686;&#30410;">&#182;</a></h6>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>信息增益：</strong>特征$A$对训练数据集$D$的信息增益$g(D, A)$定义为集合$D$的经验熵$H(D)$与特征$A$给定条件下$D$的经验条件熵$H(D | A)$之差，即</p>
+<p>\begin{equation}\label{eq:14}
+g(D, A)=H(D)-H(D | A)
+\end{equation}</p>
+<p>信息增益表示得知特征$X$的信息而使得类$Y$的信息的不确定性减少的程度。一般地，熵$H(Y)$与条件熵$H(Y | X)$之差称为互信息(mutual information)，决策树学习中的信息增益等价于训练数据集中类与特征的互信息。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>信息增益大的特征具有更强的分类能力，所以根据信息增益准则，对训练数据集$D$，计算其每个特征的信息增益，并比它们的大小，从而选择信息增益最大的特征。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>假设训练数据集为$D$，样本容量为$|D|$,有$k$个类别$C_{k}$,$\left|C_{k}\right|$为类别$C_{k}$的样本个数。某一特征$A$有$n$个不同的取值$a_{1}, a_{2}, \cdots, a_{n}$。根据特征$A$的取值可将数据集$D$划分为$n$个子集$D_{1}, D_{2}, \cdots, D_{n}$,$\left|D_{i}\right|$为$D_{i}$的样本个数。并记子集$D_{i}$中属于类$C_{k}$的样本的集合为$D_{i k}$，$\left|D_{i k}\right|$为$D_{i k}$的样本个数。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>信息增益算法</strong></p>
+
 </div>
 </div>
 </div>
@@ -16614,25 +15570,225 @@ Reciprocal condition number/precision: 3.493840061759174e-17 / 1.110223024625156
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong>Key Difference</strong><ul>
-<li><strong>LASSO</strong>
-<pre><code>- LASSO可以对特征进行选择，就像我们观察到的那样，很多系数变成了0。</code></pre>
-</li>
-<li><strong>RIDGE</strong>
-<pre><code>- 它包含所有特征。</code></pre>
-</li>
+<li>输入：训练数据集$D$和特征$A$；</li>
+<li>输出：特征$A$对训练数据集$D$的信息增益$g(D, A)$.</li>
+</ul>
+<ul>
+<li><p>(1) 计算数据集$D$的经验熵$H(D)$</p>
+<ul>
+<li>\begin{equation}\label{eq:15}
+H(D)=-\sum_{k=1}^{K} \frac{\left|C_{k}\right|}{|D|} \log \frac{\left|C_{k}\right|}{|D|}
+\end{equation}</li>
 </ul>
 </li>
-<li><strong>Typical Use Cases</strong><ul>
-<li><strong>RIDGE</strong>
-<pre><code>- 主要用于防止过拟合。因为它包含了所有的特征，所以在高维度的情况下(比如以百万计)，它不是很有用，因为计算量太大。</code></pre>
-</li>
-<li><strong>LASSO</strong>
-<pre><code>- 因为它提供了稀疏解，所以它经常在高维度数据建模中使用。在这种情况下，得到一个稀疏解具有很大的计算优势，因为零系数的特征可以简单地忽略。</code></pre>
-</li>
+<li><p>(2) 计算特征$A$数据集$D$的经验条件熵$H(D | A)$</p>
+<ul>
+<li>\begin{equation}\label{eq:16}
+H(D | A)=\sum_{i=1}^{n} \frac{\left|D_{i}\right|}{|D|} H\left(D_{i}\right)=\sum_{i=1}^{n} \frac{\left|D_{i}\right|}{|D|} \sum_{k=1}^{K} \frac{\left|D_{i k}\right|}{D_{i}} \log \frac{\left|D_{i k}\right|}{D_{i}}
+\end{equation}</li>
 </ul>
 </li>
 </ul>
+<ul>
+<li>(3) 计算信息增益<ul>
+<li>\begin{equation}\label{eq:17}
+g(D, A)=H(D)-H(D | A)
+\end{equation}</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="&#20449;&#24687;&#22686;&#30410;&#27604;">&#20449;&#24687;&#22686;&#30410;&#27604;<a class="anchor-link" href="#&#20449;&#24687;&#22686;&#30410;&#27604;">&#182;</a></h6>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>以信息增益作为特征选择准则，会存在偏向于选择取值较多的特征的问题。可以采用信息增益比对这一问题进行校正。特征$A$对训练数据集$D$的信息增益比定义为其信息增益与训练集$D$关于特征$A$的值的熵之比，即</p>
+<p>\begin{equation}\label{eq:18}
+g_{R}(D | A)=\frac{g(D, A)}{H_{A}(D)}\\
+H_{A}(D)=-\sum_{i=1}^{n} \frac{\left|D_{i}\right|}{|D|} \log \frac{\left|D_{i}\right|}{|D|}
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="&#20915;&#31574;&#26641;&#30340;&#29983;&#25104;">&#20915;&#31574;&#26641;&#30340;&#29983;&#25104;<a class="anchor-link" href="#&#20915;&#31574;&#26641;&#30340;&#29983;&#25104;">&#182;</a></h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="ID3&#31639;&#27861;">ID3&#31639;&#27861;<a class="anchor-link" href="#ID3&#31639;&#27861;">&#182;</a></h6>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>从根节点开始，对结点计算所有可能特征的<strong>信息增益</strong>，选择信息增益最大的特征作为结点的特征，并由该特征的不同取值构建子节点；</li>
+<li>对子节点递归地调用以上方法，构建决策树；</li>
+<li>直到所有特征的信息增益均很小或者没有特征可选时为止。</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="C4.5&#31639;&#27861;">C4.5&#31639;&#27861;<a class="anchor-link" href="#C4.5&#31639;&#27861;">&#182;</a></h6>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>C4.5算法对ID3算法进行了改进，它在生成决策树的过程中，使用<strong>信息增益比</strong>来进行特征选择。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h6 id="CART&#31639;&#27861;">CART&#31639;&#27861;<a class="anchor-link" href="#CART&#31639;&#27861;">&#182;</a></h6>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>分类与回归树（classification and regression tree，CART）是应用广泛的决策树学习方法，既可用于分类也可用于回归。CART假设决策树是一个二叉树，递归地二分每个特征，将特征空间划分为有限个单元，并在这些单元上确定预测的概率分布。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>递归地构建二叉决策树过程中，对于回归树，采用的是平方误差最小化准则；对于分类树，采用基尼指数最小化准则。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>关于CART算法的具体内容此处不再展开，感兴趣的朋友可以查阅参考文献。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="&#20915;&#31574;&#26641;&#20462;&#21098;">&#20915;&#31574;&#26641;&#20462;&#21098;<a class="anchor-link" href="#&#20915;&#31574;&#26641;&#20462;&#21098;">&#182;</a></h5>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>决策树的剪枝往往通过极小化决策树整体的损失函数(loss function)或代价函数(cost function)来实现。</p>
+<p>设树$T$的叶结点个数为$|T|$，$t$是树$T$的叶结点，该叶结点有$N_t$个样本点，其中$k$类的样本点有$N_{ik}$个，$H_t(T)$为叶结点$t$上的经验熵，$\alpha \ge 0$为参数，则损失函数可定义为：
+\begin{equation}\label{eq:19}
+C_{\alpha}(T)=\sum_{t=1}^{|T|} N_{t} H_{t}(T)+\alpha|T|
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>其中经验熵为
+\begin{equation}\label{eq:20}
+H_{t}(T)=-\sum_{k} \frac{N_{t k}}{N_{t}} \log \frac{N_{t k}}{N_{t}}
+\end{equation}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>损失函数的第一部分表示训练数据的预测误差，第二部分表示模型复杂度。$\alpha$的大小反映了对模型训练集拟合度和模型复杂度的折衷考虑。剪枝的过程就是当$\alpha$确定时，选择损失函数最小的模型。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>剪枝过程为：</p>
+<ul>
+<li>计算每个节点的经验熵；</li>
+<li>递归地从树的叶节点向上回缩，如果将某一个父节点的所有叶节点合并，能够使得其损失函数减小，则进行剪枝，将父节点变成新的叶节点；</li>
+<li>返回2，直到不能继续合并。</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="&#38543;&#26426;&#26862;&#26519;&#65288;Random-Forest&#65289;">&#38543;&#26426;&#26862;&#26519;&#65288;Random Forest&#65289;<a class="anchor-link" href="#&#38543;&#26426;&#26862;&#26519;&#65288;Random-Forest&#65289;">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>待补充......</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="GBDT">GBDT<a class="anchor-link" href="#GBDT">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>待补充......</p>
 
 </div>
 </div>
@@ -16642,8 +15798,12 @@ Reciprocal condition number/precision: 3.493840061759174e-17 / 1.110223024625156
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Reference</strong></p>
-<p><a href="https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-ridge-lasso-regression-python/#four">A Complete Tutorial on Ridge and Lasso Regression in Python - AARSHAY JAIN</a></p>
-<p><a href="https://www.zhihu.com/question/38121173/answer/403986652">Linear least squares, Lasso,ridge regression有何本质区别？ - 童话李的回答 - 知乎</a></p>
+<p><a href="https://cuijiahua.com/blog/2017/11/ml_9_svm_2.html">Jack Cui 机器学习实战教程</a></p>
+<p><a href="https://www.zhihu.com/question/21094489/answer/86273196">支持向量机(SVM)是什么意思？ - 简之的回答 - 知乎</a></p>
+<p><a href="https://www.zhihu.com/question/21094489/answer/117246987">支持向量机(SVM)是什么意思？ - 靠靠靠谱的回答 - 知乎</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/20794583">决策树算法的Python实现 - 黄耀鹏的文章 - 知乎</a></p>
+<p><a href="">《统计学习方法》 --李航</a></p>
+<p><a href="https://medium.com/open-machine-learning-course/open-machine-learning-course-topic-5-ensembles-of-algorithms-and-random-forest-8e05246cbba7">Open Machine Learning Course. Topic 5. Bagging and Random Forest</a></p>
 
 </div>
 </div>

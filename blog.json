@@ -89,5 +89,12 @@
   "sub_title": "LASSO Regression & RIDGE Regression",
   "top_image": "https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
   "visible": true
+ },
+ {
+  "url_title": "Non_Linear_Classificetion",
+  "title": "Non-Linear Classificetion",
+  "sub_title": "常用的非线性分类方法.",
+  "top_image": "https://images.unsplash.com/photo-1527891751199-7225231a68dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+  "visible": true
  }
 ]
