@@ -91,10 +91,24 @@
   "visible": true
  },
  {
-  "url_title": "Non_Linear_Classificetion",
-  "title": "Non-Linear Classificetion",
+  "url_title": "Non_Linear_Classification",
+  "title": "Non-Linear Classification",
   "sub_title": "常用的非线性分类方法.",
   "top_image": "https://images.unsplash.com/photo-1527891751199-7225231a68dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+  "visible": true
+ },
+ {
+  "url_title": "DataExploration",
+  "title": "数据探索及可视化",
+  "sub_title": "Seaborn",
+  "top_image": "https://images.unsplash.com/photo-1499002238440-d264edd596ec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+  "visible": true
+ },
+ {
+  "url_title": "QuantitativeVariablesPlotting",
+  "title": "Some Useful Functions for Plotting Quantitative Variables",
+  "sub_title": "Box Plot，Violin Plot",
+  "top_image": "https://miro.medium.com/max/1673/1*m011RySTwrn3ag6XR4T-HA.png",
   "visible": true
  }
 ]
